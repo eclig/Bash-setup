@@ -105,104 +105,10 @@ HISTIGNORE="&:ls:ls *:[bf]g:exit"
 
 shopt -s extglob
 
+if [[ -f ~/.bash.d/cd.bash ]]; then
+    . ~/.bash.d/cd.bash
+fi
 CDPATH=.:..:~
-
-cd () { 
-    typeset -i cdlen i;
-    typeset t;
-    if [[ -n "$CDHISTFILE" && -r "$CDHISTFILE" ]]; then
-        typeset CDHIST;
-        i=-1;
-        while read t; do
-            CDHIST[i=i+1]="$t";
-        done <$CDHISTFILE;
-    fi;
-    if [[ "${CDHIST[0]}" != "$PWD" && -n "$PWD" ]]; then
-        _cdins "$PWD";
-    fi;
-    cdlen=${#CDHIST[*]};
-    if [ $# -eq 0 ]; then
-        builtin cd;
-    else
-        if [ $# -eq 1 ]; then
-            case "$1" in 
-                -)
-                    if [[ "$OLDPWD" = "" && -n $((cdlen > 1)) ]]; then
-                        builtin cd "${CDHIST[1]}" && pwd;
-                    else
-                        builtin cd -;
-                    fi
-                ;;
-                -[[:digit:]]|-[[:digit:]][[:digit:]])
-                    if (((i=${1#-}) < cdlen)); then
-                        builtin cd "${CDHIST[i]}" && pwd;
-                    else
-                        echo $FUNCNAME: not enough elements in stack 1>&2;
-                        return 1;
-                    fi
-                ;;
-                -*)
-                    for ((i=0 ; i < cdlen ; i=i+1))
-                    do
-                        if [[ ${CDHIST[i]} == *${1#-}* ]]; then
-                            builtin cd "${CDHIST[i]}" && pwd;
-                            break;
-                        fi;
-                    done;
-                    if ((i >= cdlen)); then
-                        echo $FUNCNAME: no directory found matching \'${1#-}\' 1>&2;
-                        return 1;
-                    fi
-                ;;
-                *)
-                    if [ -f "$1" ]; then
-                        ${FUNCNAME} "${1%/*}" && pwd;
-                    else
-                        builtin cd "$1";
-                    fi
-                ;;
-            esac;
-        else
-            if [ $# -eq 2 ]; then
-                builtin cd "${PWD//$1/$2}" && pwd;
-            else
-                echo $FUNCNAME: too many arguments 1>&2;
-                return 1;
-            fi;
-        fi;
-    fi;
-    _cdins "$PWD";
-    if [ -n "$CDHISTFILE" ]; then
-        for ((i=0 ; i < ${#CDHIST[*]} ; i=i+1))
-        do
-            printf "%q\n" "${CDHIST[i]}";
-        done >$CDHISTFILE;
-    fi
-}
-
-_cdins () { 
-    typeset -i i;
-    for ((i=0 ; i < ${#CDHIST[*]} ; i=i+1)); do
-        if [ "${CDHIST[$i]}" = "$1" ]; then
-            break;
-        fi;
-    done;
-    if ((i > ${CDHISTSIZE:-22})); then
-        i=${CDHISTSIZE:-22};
-    fi;
-    while (((i=i-1) >= 0)); do
-        CDHIST[i+1]=${CDHIST[i]};
-    done;
-    CDHIST[0]="$1"
-}
-
-cdhist () {
-    typeset -i i;
-    for ((i=0 ; i < ${#CDHIST[*]} ; i=i+1)); do
-        printf "%2d: %s\n" $i ${CDHIST[$i]//${HOME}/~}
-    done
-}
-
 alias d='cdhist'
 
 h () { 
