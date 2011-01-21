@@ -107,9 +107,10 @@ shopt -s extglob
 
 if [[ -f ~/.bash.d/cd.bash ]]; then
     . ~/.bash.d/cd.bash
+    alias d='cdhist'
 fi
+
 CDPATH=.:..:~
-alias d='cdhist'
 
 h () { 
     local first=-100;
