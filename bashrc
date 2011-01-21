@@ -6,10 +6,28 @@
 
 PS1='\[\e[1;34m\]\w\[\e[0m\]\$ '
 
-PATH=/usr/local/bin:/usr/bin:/bin:"$PATH"
+add_to_path () {
+    local dir="$1";
+    local pathvar="${2:-PATH}"
 
-[[ -d ~/.bin/share ]] && PATH=~/.bin/share:"$PATH"
-[[ -d ~/.bin/$HOSTTYPE-$OSTYPE ]] && PATH=~/.bin/$HOSTTYPE-$OSTYPE:"$PATH"
+    case ":${!pathvar}:" in
+        *":${dir%/}:"* ) return 2;;
+    esac
+
+    if [[ -d "$dir" ]]; then
+        eval $pathvar=\"$dir${!pathvar:+:${!pathvar}}\"
+        return 0
+    else
+        return 1
+    fi
+}
+
+add_to_path /bin
+add_to_path /usr/bin
+add_to_path /usr/local/bin
+
+add_to_path ~/.bin/share
+add_to_path "~/.bin/$HOSTTYPE-$OSTYPE"
 
 export EDITOR=emacsclient
 
