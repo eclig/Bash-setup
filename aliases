@@ -1,0 +1,123 @@
+## -*- shell-script -*-
+
+alias 1='cd -1'
+alias 10='cd -10'
+alias 11='cd -11'
+alias 12='cd -12'
+alias 13='cd -13'
+alias 14='cd -14'
+alias 15='cd -15'
+alias 16='cd -16'
+alias 17='cd -17'
+alias 18='cd -18'
+alias 19='cd -19'
+alias 2='cd -2'
+alias 20='cd -20'
+alias 21='cd -21'
+alias 22='cd -22'
+alias 3='cd -3'
+alias 4='cd -4'
+alias 5='cd -5'
+alias 6='cd -6'
+alias 7='cd -7'
+alias 8='cd -8'
+alias 9='cd -9'
+alias aliases='source ~/.bash_aliases'
+alias b='cd -'
+
+alias cp='\cp -ivb'
+
+alias dc='darcs changes --summary LL'
+alias dir='lll -A'
+alias dr='darcs record'
+alias dww='darcs whatsnew --unified --look-for-adds'
+alias e='emacsclient -n'
+alias ediff='Perl -S ediff.pl'
+alias j='jobs -l'
+
+if inside_emacs; then
+    ls_color='always'
+else
+    ls_color='auto'
+fi
+
+alias ls="ls -xBFh -T0 --color=$ls_color"
+alias lst='ls -tr'
+alias la='ls -A'
+alias ll='ls -l'
+alias llt='ls -ltr'
+
+alias path='echo -e "${PATH//:/\\n}"'
+alias ver='echo $BASH_VERSION $MACHTYPE'
+
+alias ff='find . -iname'
+gg () { grep -r "$@" . ; }
+
+alias mkdir='\mkdir -p'
+alias mv='\mv -ivb'
+
+alias txj='tar -xjf'
+alias txz='tar -xzf'
+alias u='cd ..'
+alias uu='cd ../..'
+alias uuu='cd ../../..'
+alias uuuu='cd ../../../..'
+alias uuuuu='cd ../../../../..'
+
+alias po='popd'
+alias pu='pushd'
+
+alias r='fc -s'
+alias rm='\rm -v'
+alias rs='eval $(resize)'
+
+alias op='cygstart'
+
+alias q='ccm query -no_sort'
+alias task='ccm task'
+alias task_check='e:/home/ecl/projs/ccm/check-task/check-task.cmd -v'
+alias task_commit='e:/batch/ccm_commit_task.exe --inttest'
+alias task_init='e:/batch/ccm_task_init.exe'
+alias tc='task_check'
+alias ti='taskinfo'
+alias to='taskobjs'
+alias update-cfg='Perl -I e:/home/ecl/perl/update-config e:/home/ecl/perl/update-config/update-config.pl'
+alias xml_validate='e:/home/ecl/tools/xml_validate/validate.pl'
+
+alias bms08='desktop CMSynergy\ 6.4\ -\ bms08.lnk'
+
+md () {
+    mkdir --parents $1 && cd $1
+}
+
+alias ccm-kill-all='{ for p in ccm ccm_seng ccm_ci ccm_gui; do PSKILL $p; done; } | grep -Fi "killed."'
+
+alias cr='ccm_check_release'
+alias ct='task_commit'
+alias fd='e:/batch/ccm_folderdiff.exe -v'
+alias fl='e:/batch/ccm_folderlist.exe'
+alias ft='findtask'
+
+reqtasks () { ccm query -f "%name %owner %status [%task_synopsis]" "type='task' and req_id='$(echo $1 | tr a-z A-Z)'" | awk '$2=gensub(/task([0-9])/, "\\1", "g", $2)' ;}
+findtask () { ccm finduse -all_folder -task $*; }
+taskinfo () { ccm task -show info $1; }
+tasks () { ccm query -f "%name %owner %status [%task_synopsis]" "type='task' and owner='${1:-${USERNAME:-${USER:-${LOGNAME}}}}' and status='task_assigned'" | sed -e 's/task\([0-9]\)+/\1/' | awk '$2=gensub(/task([0-9])/, "\\1", "g", $2)'; }
+
+working () { ccm query -f "%cvid %objectname %status %task %project" -u "owner='${1:-${USERNAME:-${USER:-${LOGNAME}}}}' and (status='working' or status='visible') and not type match 'project*' and not is_product=TRUE" ; }
+
+prep () { q "name='$1' and type='project' and status='prep'"; }
+taskobjs () { ccm task -show objs -format "%displayname    %release   %status   %owner" $1; }
+
+hash -p $(type -p ccm.sh) ccm
+hash -p e:/tools/PortableGit-1.7.3.1-preview20101002/bin/git.exe git
+hash -p 'c:/Program Files/TortoiseSVN/bin/TortoiseProc.exe' tortoise
+
+repobrowser () {
+    ## http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-automation.html#tsvn-automation-basics
+    tortoise /command:repobrowser /path:"$1" &
+    disown $!
+}
+
+#
+alias mkg='mk MAKE_DBG=ON debug=1'
+alias mkx='mk expert=1'

@@ -1,0 +1,7 @@
+ * Check out this repository to ~/.bash.d.
+
+ * Create a file ~/.bashrc (see "dot.bashrc") containing the following:
+
+     [[ -f ~/.bash.d/bashrc ]] && . ~/.bash.d/bashrc
+
+ * DONE!

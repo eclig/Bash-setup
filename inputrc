@@ -1,0 +1,14 @@
+set bell-style visible
+set visible-stats on
+set mark-directories on
+set mark-modified-lines on
+
+set input-meta on
+set output-meta on
+set convert-meta off
+
+"\M-p": history-search-backward
+"\M-n": history-search-forward
+"\C-u": kill-whole-line
+"\C-xu": undo
+"\e[19~": "find . -type f -print0 | xargs -0 -e grep -n -e "
