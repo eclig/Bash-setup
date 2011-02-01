@@ -104,7 +104,7 @@ _cdins () {
 cdhist () {
     typeset -i i;
     for ((i=0 ; i < ${#CDHIST[*]} ; i=i+1)); do
-        printf "%2d: %s\n" $i ${CDHIST[$i]//${HOME}/~}
+        printf "%2d: %s\n" $i "${CDHIST[$i]//${HOME}/~}"
     done
 }
 
