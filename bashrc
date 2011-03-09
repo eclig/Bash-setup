@@ -99,9 +99,11 @@ check_exit_status () {
     return 0
 }
 
-HISTSIZE=2048
-HISTFILESIZE=1024
-HISTIGNORE="&:ls:ls *:[bf]g:exit"
+HISTSIZE=1024
+HISTFILESIZE=40960
+HISTIGNORE="&:?:??:ls *:exit"
+
+shopt -s histappend
 
 shopt -s extglob
 

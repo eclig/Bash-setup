@@ -64,6 +64,9 @@ alias uuu='cd ../../..'
 alias uuuu='cd ../../../..'
 alias uuuuu='cd ../../../../..'
 
+alias hr='history -n'
+alias hs='history -a'
+
 alias po='popd'
 alias pu='pushd'
 
