@@ -115,51 +115,13 @@ fi
 CDPATH=.:..:~
 
 h () { 
-    local first=-100;
+    ## needs the extglob shell option set!
     if [[ -z "$1" ]]; then
-        fc -l;
+        history 20
+    elif [[ $# -eq 1 && "$1" == +([[:digit:]]) ]]; then
+        history $1
     else
-        if [[ $# -gt 3 ]]; then
-            echo $FUNCNAME: too many arguments 1>&2;
-            return 1;
-        else
-            if [[ "$1" == -h || "$1" == --help ]]; then
-                cat  <<EOF
-USAGE:
-    $FUNCNAME <range>
-    $FUNCNAME <searchstring> <range>
-
-RANGE:
-    1                     the whole history
-    -<n>                  offset to the current history number (default: ${first})
-    <[-]first> [<last>]   history items between <first> and <last>
-
-EXAMPLES:
-    $FUNCNAME -250   # list last 250 history items
-    $FUNCNAME make   # list history items matching 'make'
-    $FUNCNAME bash -250 # list last 250 items matching 'bash'
-    $FUNCNAME foo 1 99
-EOF
-            else
-                if [[ "$1" == [[:digit:]]+ ]]; then
-                    if [[ -z "$2" ]]; then
-                        fc -l "$1";
-                    else
-                        if [[ "$2" == [[:digit:]] ]]; then
-                            if [[ -n "$3" ]]; then
-                                fc -l "$1" "$2" | grep -i "$3";
-                            else
-                                fc -l "$1" "$2";
-                            fi;
-                        else
-                            fc -l "${1:-${first}}" | grep -i "$2";
-                        fi;
-                    fi;
-                else
-                    fc -l "${2:-${first}}" "$3" | grep -i "$1";
-                fi;
-            fi;
-        fi;
+        history | grep "$@"
     fi
 }
 
