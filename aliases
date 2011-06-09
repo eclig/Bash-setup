@@ -127,7 +127,7 @@ prep () { q "name='$1' and type='project' and status='prep'"; }
 taskobjs () { ccm task -show objs -format "%displayname    %release   %status   %owner" $1; }
 
 hash -p $(type -p ccm.sh) ccm
-hash -p e:/tools/PortableGit-1.7.3.1-preview20101002/bin/git.exe git
+hash -p e:/tools/PortableGit-1.7.4/bin/git.exe git
 hash -p 'c:/Program Files/TortoiseSVN/bin/TortoiseProc.exe' tortoise
 
 repobrowser () {
