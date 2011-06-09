@@ -102,6 +102,7 @@ alias update-cfg='Perl -I e:/home/ecl/perl/update-config e:/home/ecl/perl/update
 alias xml_validate='e:/home/ecl/tools/xml_validate/validate.pl'
 
 alias bms08='desktop CMSynergy\ 6.4\ -\ bms08.lnk'
+alias swepit='desktop SWEPiT.lnk'
 
 md () {
     mkdir --parents $1 && cd $1
