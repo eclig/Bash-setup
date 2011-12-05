@@ -162,12 +162,6 @@ hash () {
 }
 #
 
-ccmset () { 
-    local TEMPFILE=${TMP:-/tmp}/ccmset_$$_$RANDOM;
-    trap "\rm -f $TEMPFILE" EXIT KILL INT HUP;
-    Perl e:/home/ecl/projs/ccm/ccm_setaddr/ccm_setaddr.pl --format=bourne $* $(cygpath -w $TEMPFILE) && . $TEMPFILE
-}
-
 mk () { 
     test -f make.bat || return 42;
     nice -n 20 ./make.bat "$@"
@@ -223,3 +217,9 @@ if [[ -f ~/.bash.d/aliases ]]; then
 elif [[ -f ~/.bash_aliases ]]; then
     . ~/.bash_aliases
 fi
+
+for f in ccm.bash; do
+    if [[ -f ~/.bash.d/"$f" ]]; then
+        . ~/.bash.d/"$f"
+    fi
+done
