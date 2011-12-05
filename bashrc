@@ -70,6 +70,33 @@ emacs_sync_pwd () {
     fi
 }
 
+emacs_setenv () {
+    local evalstr;
+    for varvalue in "$@"; do
+        local var=${varvalue%%=*}
+        local value=${varvalue#*=}
+        if [[ -z "${value}" ]]; then
+            value="nil"
+        else
+            if [[ "${value}" == "${var}" ]]; then
+                value="${!var}"
+            fi
+            value="\"$(printf "%q" "${value}")\""
+        fi
+
+        evalstr="${evalstr} (setenv \"${var}\" ${value})"
+    done
+    ${EMACSCLIENT:-emacsclient} --eval "(progn$evalstr)"
+}
+
+agentize () {
+    if [[ -z "$SSH_AUTH_SOCK" ]]; then
+        eval $(ssh-agent -s)
+    fi
+
+    emacs_setenv SSH_AUTH_SOCK SSH_AGENT_PID
+}
+
 prompt_command () {
     check_exit_status;          # MUST BE THE FIRST COMMAND HERE!
 
