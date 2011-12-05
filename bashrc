@@ -167,6 +167,26 @@ cutfn () {
 
 ee () { . ~/.ee.sh $* ; }
 
+dump-shell-state () {
+    echo '## Completion'
+    complete -r
+    echo '## Options settings'
+    set +o
+    echo '## Bash specific options'
+    shopt -p
+    echo '## Variables and functions'
+    typeset -p
+    echo '## Exported variables'
+    export -p
+    echo '## Read-only variables'
+    readonly -p
+    echo '## Trap settings'
+    trap -p
+    echo '## Umask'
+    umask -p
+    echo -e '\n## EOF'
+}
+
 if [[ -f ~/.bash.d/inputrc ]]; then
     export INPUTRC=~/.bash.d/inputrc
 fi
