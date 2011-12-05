@@ -1,5 +1,7 @@
 ## -*- shell-script -*-
 
+alias aliases='source ~/.bash.d/aliases'
+
 alias 1='cd -1'
 alias 10='cd -10'
 alias 11='cd -11'
@@ -22,7 +24,7 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
-alias aliases='source ~/.bash_aliases'
+
 alias b='cd -'
 
 alias cp='\cp -ivb'
