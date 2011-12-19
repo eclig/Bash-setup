@@ -50,6 +50,26 @@ alias ll='ls -l'
 alias llt='ls -ltr'
 
 alias path='echo -e "${PATH//:/\\n}"'
+pathed () {
+    local TMP=${TMP:-/tmp}
+
+    if [[ ${OSTYPE} == cygwin ]]; then
+        TMP="$(cygpath -w "$TMP" | sed -e 's/\\/\//g')";
+    elif [[ ${OSTYPE} == msys ]]; then
+        TMP="$(echo "$TMP" | sed -e 's|^/\\(.\\)/|\\1:/|')";
+    else
+        TMP="$TMP";
+    fi;
+
+    local TEMPFILE="${TMP}/path-$$-$RANDOM"
+    echo -e "${PATH//:/\\n}" > "${TEMPFILE}"
+    $EDITOR "${TEMPFILE}"
+    PATH=$(sed -e :a -e '$!N; s/\n/:/; ta' "${TEMPFILE}")
+
+    ## can't we use `trap' *locally* for that?
+    rm -f "${TEMPFILE}"
+}
+
 alias ver='echo $BASH_VERSION $MACHTYPE'
 
 ff () {
