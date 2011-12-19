@@ -52,7 +52,22 @@ alias llt='ls -ltr'
 alias path='echo -e "${PATH//:/\\n}"'
 alias ver='echo $BASH_VERSION $MACHTYPE'
 
-alias ff='find . -iname'
+ff () {
+    local dir
+
+    if [[ $# -eq 0 ]]; then
+        echo 'da fehlt was...' >&2
+        return 1
+    elif [[ $# -eq 1 ]]; then
+        dir="."
+    else
+        dir="$1"
+        shift
+    fi
+
+    find "$dir" -iname "$@"
+}
+
 gg () { grep -r "$@" . ; }
 
 alias mkdir='\mkdir -p'
