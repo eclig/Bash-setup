@@ -58,12 +58,10 @@ emacs_sync_pwd () {
     local cwd;
     if running_cygwin; then
         cwd="$(cygpath -w "$PWD" | sed -e 's/\\/\//g')";
+    elif running_msys; then
+        cwd="$(echo "$PWD" | sed -e 's|^/\\(.\\)/|\\1:/|')";
     else
-        if running_msys; then
-            cwd="$(echo "$PWD" | sed -e 's|^/\\(.\\)/|\\1:/|')";
-        else
-            cwd="$PWD";
-        fi;
+        cwd="$PWD";
     fi;
     if inside_emacs; then
         echo -en "\e|CWD:$cwd|";
@@ -165,6 +163,7 @@ hash () {
         builtin hash "$@"
     fi
 }
+
 #
 
 mk () { 
