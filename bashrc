@@ -143,6 +143,11 @@ CDPATH=.:..:~
 
 h () { 
     ## needs the extglob shell option set!
+    if ! shopt -q extglob; then
+        echo "sorry, need the option \`extglob' set!" >&2
+        return 2
+    fi
+
     if [[ -z "$1" ]]; then
         history 20
     elif [[ $# -eq 1 && "$1" == +([[:digit:]]) ]]; then
