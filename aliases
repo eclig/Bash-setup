@@ -103,7 +103,7 @@ md () {
 }
 
 hash -p $(type -p ccm.bat) ccm
-hash -p e:/tools/PortableGit-1.7.4/bin/git.exe git
+hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git
 hash -p 'c:/Program Files/TortoiseSVN/bin/TortoiseProc.exe' tortoise
 
 repobrowser () {
