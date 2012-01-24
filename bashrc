@@ -92,7 +92,8 @@ agentize () {
         eval $(ssh-agent -s)
     fi
 
-    emacs_setenv SSH_AUTH_SOCK SSH_AGENT_PID
+    [[ -n "$SSH_AUTH_SOCK" && -n "$SSH_AGENT_PID" ]] && \
+        emacs_setenv SSH_AUTH_SOCK SSH_AGENT_PID
 }
 
 prompt_command () {
