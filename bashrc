@@ -60,7 +60,7 @@ emacs_sync_pwd () {
         cwd="$(cygpath -w "$PWD" | sed -e 's/\\/\//g')";
     else
         if running_msys; then
-            cwd="$(echo "$PWD" | sed -e 's|^/\\(.\\)/|\\1:/|')";
+            cwd="$(echo "$PWD" | sed -e 's|^/\(.\)/|\1:/|')";
         else
             cwd="$PWD";
         fi;
