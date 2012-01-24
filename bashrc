@@ -174,7 +174,7 @@ mk () {
 
 
 desktop () {
-        cygstart "${USERPROFILE}/Desktop/$1"
+        explorer "${USERPROFILE}\\Desktop\\$1"
 }
 
 cutfn () {
