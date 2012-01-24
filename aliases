@@ -1,5 +1,7 @@
 ## -*- shell-script -*-
 
+alias aliases='source ~/.bash.d/aliases'
+
 alias 1='cd -1'
 alias 10='cd -10'
 alias 11='cd -11'
@@ -22,7 +24,7 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
-alias aliases='source ~/.bash_aliases'
+
 alias b='cd -'
 
 alias cp='\cp -ivb'
@@ -48,9 +50,44 @@ alias ll='ls -l'
 alias llt='ls -ltr'
 
 alias path='echo -e "${PATH//:/\\n}"'
+pathed () {
+    local TMP=${TMP:-/tmp}
+
+    if [[ ${OSTYPE} == cygwin ]]; then
+        TMP="$(cygpath -w "$TMP" | sed -e 's/\\/\//g')";
+    elif [[ ${OSTYPE} == msys ]]; then
+        TMP="$(echo "$TMP" | sed -e 's|^/\\(.\\)/|\\1:/|')";
+    else
+        TMP="$TMP";
+    fi;
+
+    local TEMPFILE="${TMP}/path-$$-$RANDOM"
+    echo -e "${PATH//:/\\n}" > "${TEMPFILE}"
+    $EDITOR "${TEMPFILE}"
+    PATH=$(sed -e :a -e '$!N; s/\n/:/; ta' "${TEMPFILE}")
+
+    ## can't we use `trap' *locally* for that?
+    rm -f "${TEMPFILE}"
+}
+
 alias ver='echo $BASH_VERSION $MACHTYPE'
 
-alias ff='find . -iname'
+ff () {
+    local dir
+
+    if [[ $# -eq 0 ]]; then
+        echo 'da fehlt was...' >&2
+        return 1
+    elif [[ $# -eq 1 ]]; then
+        dir="."
+    else
+        dir="$1"
+        shift
+    fi
+
+    find "$dir" -iname "$@"
+}
+
 gg () { grep -r "$@" . ; }
 
 alias mkdir='\mkdir -p'
@@ -90,14 +127,6 @@ alias rs='eval $(resize)'
 
 alias op='cygstart'
 
-alias q='ccm query -no_sort'
-alias task='ccm task'
-alias task_check='e:/home/ecl/projs/ccm/check-task/check-task.cmd -v'
-alias task_commit='e:/batch/ccm_commit_task.exe --inttest'
-alias task_init='e:/batch/ccm_task_init.exe'
-alias tc='task_check'
-alias ti='taskinfo'
-alias to='taskobjs'
 alias update-cfg='Perl -I e:/home/ecl/perl/update-config e:/home/ecl/perl/update-config/update-config.pl'
 alias xml_validate='e:/home/ecl/tools/xml_validate/validate.pl'
 
@@ -108,26 +137,8 @@ md () {
     mkdir --parents $1 && cd $1
 }
 
-alias ccm-kill-all='{ for p in ccm ccm_seng ccm_ci ccm_gui; do PSKILL $p; done; } | grep -Fi "killed."'
-
-alias cr='ccm_check_release'
-alias ct='task_commit'
-alias fd='e:/batch/ccm_folderdiff.exe -v'
-alias fl='e:/batch/ccm_folderlist.exe'
-alias ft='findtask'
-
-reqtasks () { ccm query -f "%name %owner %status [%task_synopsis]" "type='task' and req_id='$(echo $1 | tr a-z A-Z)'" | awk '$2=gensub(/task([0-9])/, "\\1", "g", $2)' ;}
-findtask () { ccm finduse -all_folder -task $*; }
-taskinfo () { ccm task -show info $1; }
-tasks () { ccm query -f "%name %owner %status [%task_synopsis]" "type='task' and owner='${1:-${USERNAME:-${USER:-${LOGNAME}}}}' and status='task_assigned'" | sed -e 's/task\([0-9]\)+/\1/' | awk '$2=gensub(/task([0-9])/, "\\1", "g", $2)'; }
-
-working () { ccm query -f "%cvid %objectname %status %task %project" -u "owner='${1:-${USERNAME:-${USER:-${LOGNAME}}}}' and (status='working' or status='visible') and not type match 'project*' and not is_product=TRUE" ; }
-
-prep () { q "name='$1' and type='project' and status='prep'"; }
-taskobjs () { ccm task -show objs -format "%displayname    %release   %status   %owner" $1; }
-
-hash -p $(type -p ccm.sh) ccm
-hash -p e:/tools/PortableGit-1.7.4/bin/git.exe git
+hash -p $(type -p ccm.bat) ccm
+hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git
 hash -p 'c:/Program Files/TortoiseSVN/bin/TortoiseProc.exe' tortoise
 
 repobrowser () {
@@ -135,6 +146,18 @@ repobrowser () {
     tortoise /command:repobrowser /path:"$1" &
     disown $!
 }
+
+proxy () {
+    local pwd
+    read -s -p "password: " pwd
+    echo
+
+    for p in http https; do
+        export ${p}_proxy="${p}://${USER}${pwd:+:${pwd}}@proxy.muc:8080"
+    done
+}
+
+alias brotzeit='cygstart //europe.bmw.corp/winfs/EA-org/EA-4_Org/EA-41/EA-41/40_Allgemein/04_Austausch/Ern/Brotzeit/aktuelle_Brotzeit_Bestellliste.xls'
 
 #
 alias mkg='mk MAKE_DBG=ON debug=1'

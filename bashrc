@@ -58,16 +58,43 @@ emacs_sync_pwd () {
     local cwd;
     if running_cygwin; then
         cwd="$(cygpath -w "$PWD" | sed -e 's/\\/\//g')";
+    elif running_msys; then
+        cwd="$(echo "$PWD" | sed -e 's|^/\(.\)/|\1:/|')";
     else
-        if running_msys; then
-            cwd="$(echo "$PWD" | sed -e 's|^/\(.\)/|\1:/|')";
-        else
-            cwd="$PWD";
-        fi;
+        cwd="$PWD";
     fi;
+
     if inside_emacs; then
         echo -en "\e|CWD:$cwd|";
     fi
+}
+
+emacs_setenv () {
+    local evalstr;
+    for varvalue in "$@"; do
+        local var=${varvalue%%=*}
+        local value=${varvalue#*=}
+        if [[ -z "${value}" ]]; then
+            value="nil"
+        else
+            if [[ "${value}" == "${var}" ]]; then
+                value="${!var}"
+            fi
+            value="\"$(printf "%q" "${value}")\""
+        fi
+
+        evalstr="${evalstr} (setenv \"${var}\" ${value})"
+    done
+    ${EMACSCLIENT:-emacsclient} --eval "(progn$evalstr)"
+}
+
+agentize () {
+    if [[ -z "$SSH_AUTH_SOCK" ]]; then
+        eval $(ssh-agent -s)
+    fi
+
+    [[ -n "$SSH_AUTH_SOCK" && -n "$SSH_AGENT_PID" ]] && \
+        emacs_setenv SSH_AUTH_SOCK SSH_AGENT_PID
 }
 
 prompt_command () {
@@ -116,6 +143,11 @@ CDPATH=.:..:~
 
 h () { 
     ## needs the extglob shell option set!
+    if ! shopt -q extglob; then
+        echo "sorry, need the option \`extglob' set!" >&2
+        return 2
+    fi
+
     if [[ -z "$1" ]]; then
         history 20
     elif [[ $# -eq 1 && "$1" == +([[:digit:]]) ]]; then
@@ -133,13 +165,8 @@ hash () {
         builtin hash "$@"
     fi
 }
-#
 
-ccmset () { 
-    local TEMPFILE=${TMP:-/tmp}/ccmset_$$_$RANDOM;
-    trap "\rm -f $TEMPFILE" EXIT KILL INT HUP;
-    Perl e:/home/ecl/projs/ccm/ccm_setaddr/ccm_setaddr.pl --format=bourne $* $(cygpath -w $TEMPFILE) && . $TEMPFILE
-}
+#
 
 mk () { 
     test -f make.bat || return 42;
@@ -148,7 +175,7 @@ mk () {
 
 
 desktop () {
-        cygstart "${USERPROFILE}/Desktop/$1"
+        explorer "${USERPROFILE}\\Desktop\\$1"
 }
 
 cutfn () {
@@ -167,6 +194,26 @@ cutfn () {
 
 ee () { . ~/.ee.sh $* ; }
 
+dump-shell-state () {
+    echo '## Completion'
+    complete -r
+    echo '## Options settings'
+    set +o
+    echo '## Bash specific options'
+    shopt -p
+    echo '## Variables and functions'
+    typeset -p
+    echo '## Exported variables'
+    export -p
+    echo '## Read-only variables'
+    readonly -p
+    echo '## Trap settings'
+    trap -p
+    echo '## Umask'
+    umask -p
+    echo -e '\n## EOF'
+}
+
 if [[ -f ~/.bash.d/inputrc ]]; then
     export INPUTRC=~/.bash.d/inputrc
 fi
@@ -176,3 +223,9 @@ if [[ -f ~/.bash.d/aliases ]]; then
 elif [[ -f ~/.bash_aliases ]]; then
     . ~/.bash_aliases
 fi
+
+for f in ccm.bash; do
+    if [[ -f ~/.bash.d/"$f" ]]; then
+        . ~/.bash.d/"$f"
+    fi
+done
