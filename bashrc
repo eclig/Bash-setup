@@ -69,7 +69,7 @@ emacs_sync_pwd () {
     fi
 }
 
-emacs_setenv () {
+esetenv () {
     local evalstr;
     for varvalue in "$@"; do
         local var=${varvalue%%=*}
@@ -94,7 +94,7 @@ agentize () {
     fi
 
     [[ -n "$SSH_AUTH_SOCK" && -n "$SSH_AGENT_PID" ]] && \
-        emacs_setenv SSH_AUTH_SOCK SSH_AGENT_PID
+        esetenv SSH_AUTH_SOCK SSH_AGENT_PID
 }
 
 prompt_command () {
