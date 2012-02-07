@@ -139,11 +139,10 @@ md () {
 
 hash -p $(type -p ccm.bat) ccm
 hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git
-hash -p 'c:/Program Files/TortoiseSVN/bin/TortoiseProc.exe' tortoise
 
 repobrowser () {
     ## http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-automation.html#tsvn-automation-basics
-    tortoise /command:repobrowser /path:"$1" &
+    TortoiseProc /command:repobrowser /path:"$1" &
     disown $!
 }
 
