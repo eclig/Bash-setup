@@ -31,20 +31,20 @@ add_to_path "~/.bin/$HOSTTYPE-$OSTYPE"
 
 export EDITOR=emacsclient
 
-inside_emacs () { 
+inside_emacs () {
     test -n "$INSIDE_EMACS"
 }
 
-running_cygwin () { 
+running_cygwin () {
     [[ ${OSTYPE} == cygwin ]]
 }
 
-running_msys () { 
+running_msys () {
     [[ ${OSTYPE} == msys ]]
 }
 
-term_title () { 
-    case "$TERM" in 
+term_title () {
+    case "$TERM" in
         *xterm* | rxvt | dtter | kterm | Eterm)
             echo -en "\e]0;$*\a"
         ;;
@@ -54,7 +54,7 @@ term_title () {
     esac
 }
 
-emacs_sync_pwd () { 
+emacs_sync_pwd () {
     local cwd;
     if running_cygwin; then
         cwd="$(cygpath -w "$PWD" | sed -e 's/\\/\//g')";
@@ -111,7 +111,7 @@ prompt_command () {
 
 PROMPT_COMMAND=prompt_command
 
-check_exit_status () { 
+check_exit_status () {
     local status="$?";
     local signal="";
     if [ ${status} -ne 0 ] && [ ${status} != 128 ]; then
@@ -141,7 +141,7 @@ fi
 
 CDPATH=.:..:~
 
-h () { 
+h () {
     ## needs the extglob shell option set!
     if ! shopt -q extglob; then
         echo "sorry, need the option \`extglob' set!" >&2
@@ -168,7 +168,7 @@ hash () {
 
 #
 
-mk () { 
+mk () {
     test -f make.bat || return 42;
     nice -n 20 ./make.bat "$@"
 }

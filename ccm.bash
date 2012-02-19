@@ -57,7 +57,7 @@ ccm_server () {
     fi
 }
 
-ccmset () { 
+ccmset () {
     local TEMPFILE=${TMP:-/tmp}/ccmset_$$_$RANDOM;
     trap "\rm -f $TEMPFILE" EXIT KILL INT HUP;
     Perl e:/qx29999/projs/ccm/ccm_setaddr/ccm_setaddr.pl --format=bourne $* $(cygpath -w $TEMPFILE) && . $TEMPFILE

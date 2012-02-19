@@ -11,7 +11,7 @@
 ## and saved to the file named by it.  The CDHISTSIZE, if set,
 ## determines the size of the directory stack.  The default size is 22.
 
-cd () { 
+cd () {
     typeset -i cdlen i;
     typeset t;
 
@@ -32,7 +32,7 @@ cd () {
     if [ $# -eq 0 ]; then
         builtin cd;
     elif [ $# -eq 1 ]; then
-        case "$1" in 
+        case "$1" in
             -)
                 if [[ "$OLDPWD" = "" && -n $((cdlen > 1)) ]]; then
                     builtin cd "${CDHIST[1]}" && pwd;
@@ -85,7 +85,7 @@ cd () {
     fi
 }
 
-_cdins () { 
+_cdins () {
     typeset -i i;
     for ((i=0 ; i < ${#CDHIST[*]} ; i=i+1)); do
         if [ "${CDHIST[$i]}" = "$1" ]; then
