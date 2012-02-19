@@ -65,7 +65,7 @@ emacs_sync_pwd () {
     fi;
 
     if inside_emacs; then
-        echo -en "\e|CWD:$cwd|";
+        echo -en "\e[|pwdsync:$cwd|";
     fi
 }
 
