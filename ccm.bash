@@ -50,7 +50,7 @@ ccm_server () {
     elif [[ ${out} == *unable\ to\ validate\ the\ password* ||
             ${out} == *Engine\ startup\ failed* ]]; then
         echo 'Engine startup failed.  Wrong password?  Try again!'
-        main $(_ccm_read_password)
+        $FUNCNAME $(_ccm_read_password)
     else
         echo -E "${out}"
         exit 1
