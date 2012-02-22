@@ -128,7 +128,7 @@ alias rs='eval $(resize)'
 alias op='cygstart'
 
 alias update-cfg='Perl -I e:/home/ecl/perl/update-config e:/home/ecl/perl/update-config/update-config.pl'
-alias xml_validate='e:/home/ecl/tools/xml_validate/validate.pl'
+alias xml_validate='e:/qx29999/tools/xml_validate/validate.pl'
 
 alias bms08='desktop CMSynergy\ 6.4\ -\ bms08.lnk'
 alias swepit='desktop SWEPiT.lnk'
