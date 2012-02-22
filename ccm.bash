@@ -94,6 +94,43 @@ taskobjs () {
     ccm task -show objs -format "%displayname    %release   %status   %owner" $1
 }
 
+latest () {
+    local esc=$'\e'
+    local bold="${esc}[1m"
+    local red="${esc}[31m"
+    local blue="${esc}[34m"
+    local magenta="${esc}[35m"
+    local off="${esc}[0m"
+    local name status owner modtime
+    local color
+
+    local proj=$1
+    shift
+
+    local query="name='$proj' and type='project' and (status='prep' or status='integrate' or status='released') and is_hist_leaf() and create_time > time('$(date --date '6 months ago')')"
+
+    if [[ -n "$1" ]]; then
+        query="$query and ($*)"
+    fi
+
+    ccm query -f "%displayname %status %owner [%modify_time]" "$query" | \
+        { while read n name objstatus owner modtime; do
+            if [[ "$objstatus" == "prep" ]]; then
+                color="$bold$red"
+            elif [[ "$objstatus" == "integrate" ]]; then
+                color="$bold$magenta"
+            elif [[ "$objstatus" == "released" ]]; then
+                color=$blue
+            else
+                color=$off
+            fi
+
+            printf -- "%5s $bold%-20s$off $color%-12s$off %-8s %s\n" "$n" "$name" "$objstatus" "$owner" "$modtime"
+
+          done
+    }
+}
+
 alias cr='ccm_check_release'
 alias ct='task_commit'
 alias fd='e:/batch/ccm_folderdiff.exe -v'
