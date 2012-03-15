@@ -129,18 +129,19 @@ check_exit_status () {
     return 0
 }
 
-HISTSIZE=1024
-HISTFILESIZE=40960
-HISTIGNORE="&:?:??:ls *:exit"
+### History
 
-shopt -s histappend
+shopt -s histappend      # appends rather than overwriting the history
+shopt -s cmdhist         # save multi-line entries as one command
 
-if [[ -f ~/.bash.d/cd.bash ]]; then
-    . ~/.bash.d/cd.bash
-    alias d='cdhist'
+if [[ -d ~/.bash.d ]]; then
+    HISTFILE="$HOME/.bash.d/.bash_history"
 fi
 
-CDPATH=.:..:~
+HISTSIZE=40960
+HISTFILESIZE=1000000
+HISTIGNORE=" *:&:?:??:ls *:exit:history"
+
 
 h () {
     ## needs the extglob shell option set!
@@ -157,6 +158,15 @@ h () {
         history | grep "$@"
     fi
 }
+
+###
+
+if [[ -f ~/.bash.d/cd.bash ]]; then
+    . ~/.bash.d/cd.bash
+    alias d='cdhist'
+fi
+
+CDPATH=.:..:~
 
 hash () {
     ## accepts "hash foo=/path/to/foo" as zsh does
