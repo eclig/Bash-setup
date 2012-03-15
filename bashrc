@@ -1,5 +1,7 @@
 # -*- shell-script -*-
 
+shopt -s extglob
+
 [[ -z $USER && -n $USERNAME ]] && export USER="$USERNAME"
 [[ -z $USER && -n $LOGNAME  ]] && export USER="$LOGNAME"
 [[ -z $LOGNAME && -n $USER  ]] && export LOGNAME="$USER"
@@ -131,8 +133,6 @@ HISTFILESIZE=40960
 HISTIGNORE="&:?:??:ls *:exit"
 
 shopt -s histappend
-
-shopt -s extglob
 
 if [[ -f ~/.bash.d/cd.bash ]]; then
     . ~/.bash.d/cd.bash
