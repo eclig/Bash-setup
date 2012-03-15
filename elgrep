@@ -1,0 +1,24 @@
+#!/bin/bash
+
+## Run `grep' in Emacs with the given arguments
+## Emilio Lopes <eclig@gmx.net>, 2012-03-15
+
+# treat unset variables as an error
+set -o nounset
+
+EMACSCLIENT="${EMACSCLIENT:-emacsclient}"
+
+if ! type -p "${EMACSCLIENT}" 2>&1 1> /dev/null ; then
+    echo ERROR: could not find \`emacsclient\': \""${EMACSCLIENT}"\" 1>&2
+    exit 1
+fi
+
+cwd="${PWD}"
+
+if [[ "${OSTYPE}" == cygwin && "${cwd}" == /cygdrive/* ]]; then
+    cwd="$(echo "$PWD" | sed -e 's@^/cygdrive/\(.\)\(/\|$\)@\1:/@')"
+elif [[ ${OSTYPE} == msys && ( "${cwd}" == /?/* || "${cwd%/}" == /? ) ]]; then
+    cwd="$(echo "$PWD" | sed -e 's@^/\(.\)\(/\|$\)@\1:/@')"
+fi
+
+"${EMACSCLIENT}" --eval "(let ((default-directory \"${cwd%/}/\")) (grep (concat grep-command \"$*\")))"
