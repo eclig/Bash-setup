@@ -108,6 +108,7 @@ prompt_command () {
     else
         term_title "${PWD##*/}";
     fi;
+    history -a                  # append history to the history file
     inside_emacs && emacs_sync_pwd
 }
 
