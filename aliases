@@ -175,7 +175,7 @@ alias bms08='desktop CMSynergy\ 6.4\ -\ bms08.lnk'
 alias swepit='desktop SWEPiT.lnk'
 
 md () {
-    mkdir --parents $1 && cd $1
+    mkdir --parents "$1" && cd "$1"
 }
 
 hash -p $(type -p ccm.bat) ccm
