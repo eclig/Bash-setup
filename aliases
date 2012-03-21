@@ -178,8 +178,8 @@ md () {
     mkdir --parents "$1" && cd "$1"
 }
 
-hash -p $(type -p ccm.bat) ccm
-hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git
+hash -p $(type -p ccm.bat) ccm  > /dev/null 2>&1
+hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
 
 repobrowser () {
     ## http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-automation.html#tsvn-automation-basics
