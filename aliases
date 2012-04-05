@@ -186,6 +186,12 @@ md () {
 hash -p $(type -p ccm.bat) ccm  > /dev/null 2>&1
 hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
 
+repo='https://asc-repo.bmwgroup.net/svn/asc045'
+projs="${repo}/Projects"
+
+alias svn.ext='svn pg svn:externals'
+alias svn.url="svn info | grep -i url | awk '{print \$2}'"
+
 repobrowser () {
     ## http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-automation.html#tsvn-automation-basics
     TortoiseProc /command:repobrowser /path:"$1" &
