@@ -140,7 +140,7 @@ fi
 
 HISTSIZE=40960
 HISTFILESIZE=1000000
-HISTIGNORE=" *:&:?:??:ls *:exit:history"
+HISTIGNORE=" *:&:?:??:ls *:ee *:h *:e *:exit:history"
 
 
 h () {
