@@ -203,6 +203,8 @@ alias svnl='svn log'
 alias svn.ext='svn pg svn:externals'
 alias svn.url="svn info | grep -i url | awk '{print \$2}'"
 
+alias gits='git status --short --branch'
+
 repobrowser () {
     ## http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-automation.html#tsvn-automation-basics
     TortoiseProc /command:repobrowser /path:"$1" &
