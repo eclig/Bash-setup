@@ -29,6 +29,13 @@ alias b='cd -'
 
 alias cp='\cp -ivb'
 
+save () {
+    local now=$(date +'%Y%m%dT%k%m%S')
+    for f in "$@"; do
+        \cp --archive --interactive --verbose -- "${f}" "${f}.~${now}~"
+    done
+}
+
 alias dc='darcs changes --summary LL'
 alias dir='lll -A'
 alias dr='darcs record'
