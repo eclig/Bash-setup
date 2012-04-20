@@ -197,7 +197,7 @@ repo='https://asc-repo.bmwgroup.net/svn/asc045'
 projs="${repo}/Projects"
 
 alias svnu='svn update --ignore-externals'
-alias svns='svn status --ignore-externals --quiet'
+alias svns='svn status --ignore-externals'
 alias svnd='svn diff'
 alias svnl='svn log'
 alias svn.ext='svn pg svn:externals'
