@@ -213,10 +213,12 @@ hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
 repo='https://asc-repo.bmwgroup.net/svn/asc045'
 projs="${repo}/Projects"
 
+alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
 alias svnd='svn diff'
 alias svnl='svn log'
+alias svn.news='svn log -rBASE:HEAD'
 alias svn.ext='svn pg svn:externals'
 alias svn.url="svn info | grep -i url | awk '{print \$2}'"
 
