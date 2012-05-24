@@ -31,7 +31,7 @@ alias cp='\cp -ivb'
 
 save () {
     local now=$(date +'%Y%m%dT%k%m%S')
-    for f in "$@"; do
+    for f in "${@%/}"; do
         \cp --archive --interactive -- "${f}" "${f}.~${now}~"
     done
 }
