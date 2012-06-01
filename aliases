@@ -213,6 +213,9 @@ hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
 repo='https://asc-repo.bmwgroup.net/svn/asc045'
 projs="${repo}/Projects"
 
+svn16 () { PATH=/cygdrive/e/tools/Subversion-1.6.11/bin:"$PATH" "$@"; }
+svn17 () { PATH=/cygdrive/c/Progra~1/SlikSvn/bin:"$PATH" "$@"; }
+
 alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
