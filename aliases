@@ -97,6 +97,10 @@ ff () {
 
 gg () { grep -r "$@" . ; }
 
+if inside_emacs; then
+    ack () { command ack "$@" </dev/null; }
+fi
+
 alias mkdir='\mkdir -p'
 alias mv='\mv -ivb'
 
