@@ -33,6 +33,8 @@ add_to_path "~/.bin/$HOSTTYPE-$OSTYPE"
 
 export EDITOR=emacsclient
 
+export ACK_OPTIONS='--nogroup --with-filename --all'
+
 inside_emacs () {
     test -n "$INSIDE_EMACS"
 }
