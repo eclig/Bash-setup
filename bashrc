@@ -6,8 +6,6 @@ shopt -s extglob
 [[ -z $USER && -n $LOGNAME  ]] && export USER="$LOGNAME"
 [[ -z $LOGNAME && -n $USER  ]] && export LOGNAME="$USER"
 
-PS1='\[\e[1;34m\]\w\[\e[0m\]\$ '
-
 add_to_path () {
     local dir="$1";
     local pathvar="${2:-PATH}"
@@ -241,8 +239,18 @@ elif [[ -f ~/.bash_aliases ]]; then
     . ~/.bash_aliases
 fi
 
-for f in ccm.bash; do
+for f in ccm.bash vcs.bash; do
     if [[ -f ~/.bash.d/"$f" ]]; then
         . ~/.bash.d/"$f"
     fi
 done
+
+if running_cygwin && type -t cygpath2w32 > /dev/null 2>&1; then
+    PS1='\[\e[1;34m\]$(cygpath2w32 "$PWD")\[\e[0m\]\$ '
+else
+    PS1='\[\e[1;34m\]\w\[\e[0m\]\$ '
+fi
+
+if type -t prompt_vcs > /dev/null 2>&1; then
+    PS1="\$(prompt_vcs) ${PS1}"
+fi
