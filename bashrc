@@ -58,10 +58,14 @@ term_title () {
     esac
 }
 
+cygpath2w32 () {
+    cygpath --windows "$1" | sed -e 's|\\|/|g';
+}
+
 emacs_sync_pwd () {
     local cwd;
     if running_cygwin; then
-        cwd="$(cygpath -w "$PWD" | sed -e 's|\\|/|g')";
+        cwd="$(cygpath2w32 "$PWD")";
     elif running_msys; then
         cwd="$(echo "$PWD" | sed -e 's@^/\(.\)\(/\|$\)@\1:/@')";
     else
