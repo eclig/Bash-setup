@@ -227,7 +227,7 @@ alias svnd='svn diff'
 alias svnl='svn log'
 alias svn.news='svn log -rBASE:HEAD'
 alias svn.ext='svn pg svn:externals'
-function svn.url { svn info "$@" | grep -i url | awk '{print $2}'; }
+function svn.url { svn info "$@" 2>/dev/null | awk -F': ' '$1 == "URL" {print $2}' ; }
 
 alias gits='git status --short --branch'
 
