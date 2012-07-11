@@ -219,6 +219,12 @@ projs="${repo}/Projects"
 
 svn16 () { PATH=/cygdrive/e/tools/Subversion-1.6.11/bin:"$PATH" "$@"; }
 svn17 () { PATH=/cygdrive/c/Progra~1/SlikSvn/bin:"$PATH" "$@"; }
+tort17 () { PATH=/cygdrive/c/Progra~1/TortoiseSVN/bin:"$PATH" "$@"; }
+
+perl510 () {
+    local PERL510_DIR="/cygdrive/c/tools/Perl_5_10_0_1005"
+    PATH="${PERL510_DIR}/bin":"$PATH" "$@";
+}
 
 alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
