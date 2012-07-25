@@ -230,7 +230,7 @@ alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
 alias svnd='svn diff'
-alias svnl='svn log'
+alias svnl='svn log --limit 10'
 alias svn.news='svn log -rBASE:HEAD'
 alias svn.ext='svn pg svn:externals'
 function svn.url { svn info "$@" 2>/dev/null | awk -F': ' '$1 == "URL" {print $2}' ; }
