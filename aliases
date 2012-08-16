@@ -166,7 +166,7 @@ map () {
 hr () {
     history -n
     if [[ ${INSIDE_EMACS} == *comint* ]] && type emacsclient > /dev/null 2>&1; then
-        emacsclient --eval "(and (fboundp 'with-buffer-hosting-pid) (with-buffer-hosting-pid $$ (comint-read-input-ring)))"
+        emacsclient --eval "(and (fboundp 'with-buffer-hosting-pid) (with-buffer-hosting-pid $$ (comint-read-input-ring)))" > /dev/null
     fi
 }
 alias hs='history -a'
