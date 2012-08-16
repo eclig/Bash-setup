@@ -177,18 +177,24 @@ history_stats () {
 
 help! () {
     cat <<EOF
-!!            # Last command and all arguments
-!-3           # Third-to-last command and all arguments
-!^            # First argument of last command
-!:2           # Second argument of last command
-!$            # Last argument of last command
-!*            # All arguments of the last command
-!42           # Expands to the 42nd command in history
-!foo          # Last command beginning with 'foo'
-!?foo         # Last command containing 'foo'
-^foo^bar      # Last command with first instance of 'foo' replaced with 'bar'
-!!:gs/foo/bar # Last command with all instances of 'foo' replaced with 'bar
-<command>:p   # Don't execute, just print command
+!!                 # Last command and all arguments
+!-3                # Third-to-last command and all arguments
+!^                 # First argument of last command
+!42^               # First argument of the 42nd command in history
+!:2                # Second argument of last command
+!42:2              # Second argument of the 42nd command in history
+!$                 # Last argument of last command
+!*                 # All arguments of the last command
+!42                # Expands to the 42nd command in history
+!42*               # All arguments of the 42nd command in history
+!42:1:t            # Basename ("tail") of the first argument of the 42nd command in history
+!42:1:h            # Dirname ("head") of the first argument of the 42nd command in history
+!42:1:t:r          # Basename of the first argument of the 42nd command in history, sans trailing suffix
+!foo               # Last command beginning with 'foo'
+!?foo              # Last command containing 'foo'
+^foo^bar           # Last command with first instance of 'foo' replaced with 'bar'
+!!:gs/foo/bar      # Last command with all instances of 'foo' replaced with 'bar
+<command>:p        # Don't execute, just print command
 EOF
 }
 
