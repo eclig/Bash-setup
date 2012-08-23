@@ -97,12 +97,26 @@ esetenv () {
 }
 
 agentize () {
-    if [[ -z "$SSH_AUTH_SOCK" ]]; then
-        eval $(ssh-agent -s)
+    local SSH_AGENT_CONFIG="$HOME/.ssh_agent_session"
+
+    if [[ -e "$SSH_AGENT_CONFIG" ]]; then
+        . "$SSH_AGENT_CONFIG" > /dev/null
     fi
 
-    [[ -n "$SSH_AUTH_SOCK" && -n "$SSH_AGENT_PID" ]] && \
+    if [[ -z "$SSH_AUTH_SOCK" ]] || \
+        ! ssh-add -l > /dev/null 2>&1; then
+        local SSH_AGENT_DATA="$(ssh-agent -s)"
+        local UMASK_SAVE="$(umask -p)"
+        umask 077
+        echo "$SSH_AGENT_DATA" >| "$SSH_AGENT_CONFIG"
+        $UMASK_SAVE
+        eval $SSH_AGENT_DATA  > /dev/null
+    fi
+
+    [[ -n "$INSIDE_EMACS" && -n "$SSH_AUTH_SOCK" && -n "$SSH_AGENT_PID" ]] && \
         esetenv SSH_AUTH_SOCK SSH_AGENT_PID
+
+    echo Agent pid $SSH_AGENT_PID
 }
 
 prompt_command () {
