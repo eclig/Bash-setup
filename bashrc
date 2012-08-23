@@ -76,6 +76,8 @@ emacs_sync_pwd () {
 }
 
 esetenv () {
+    type -t ${EMACSCLIENT:-emacsclient} > /dev/null 2>&1 || return 1
+
     local evalstr;
     for varvalue in "$@"; do
         local var=${varvalue%%=*}
