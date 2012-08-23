@@ -122,7 +122,8 @@ agentize () {
 prompt_command () {
     check_exit_status;          # MUST BE THE FIRST COMMAND HERE!
 
-    set +x                      # in case the previous command used 'set -x'
+    local xtrace_status=$(shopt -p -o xtrace)
+    set +o xtrace
     if [[ "$PWD" == "$HOME" ]]; then
         term_title '~';
     else
@@ -130,6 +131,7 @@ prompt_command () {
     fi;
     history -a                  # append history to the history file
     inside_emacs && emacs_sync_pwd
+    $xtrace_status
 }
 
 PROMPT_COMMAND=prompt_command
