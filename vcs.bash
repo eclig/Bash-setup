@@ -4,14 +4,14 @@ prompt_git() {
     HEAD="$(git symbolic-ref HEAD 2>/dev/null)"
     BRANCH="${HEAD##*/}"
     [[ -n "$(git status 2>/dev/null | \
-        grep -F 'working directory clean')" ]] || STATUS="!"
+        grep -F 'working directory clean')" ]] || STATUS='!'
     printf '(git:%s)' "${BRANCH:-unknown}${STATUS}"
 }
 
 prompt_hg() {
     hg branch &>/dev/null || return 1
     BRANCH="$(hg branch 2>/dev/null)"
-    [[ -n "$(hg status 2>/dev/null)" ]] && STATUS="!"
+    [[ -n "$(hg status 2>/dev/null)" ]] && STATUS='!'
     printf '(hg:%s)' "${BRANCH:-unknown}${STATUS}"
 }
 
@@ -31,7 +31,7 @@ prompt_svn() {
             BRANCH="${BRANCH%%/*}"
             ;;
     esac
-    [[ -n "$(svn status 2>/dev/null)" ]] && STATUS="!"
+    [[ -n "$(svn status 2>/dev/null)" ]] && STATUS='!'
     printf '(svn:%s)' "${BRANCH:-unknown}${STATUS}"
 }
 
