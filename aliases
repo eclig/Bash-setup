@@ -37,7 +37,6 @@ save () {
 }
 
 alias dc='darcs changes --summary LL'
-alias dir='lll -A'
 alias dr='darcs record'
 alias dww='darcs whatsnew --unified --look-for-adds'
 alias e='emacsclient -n'
