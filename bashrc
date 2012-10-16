@@ -128,7 +128,6 @@ prompt_command () {
         term_title "${PWD##*/}";
     fi;
     history -a                  # append history to the history file
-    inside_emacs && emacs_sync_pwd
     $xtrace_status
 }
 
@@ -267,6 +266,6 @@ else
     PS1='\[\e[1;34m\]\w\[\e[0m\]\$ '
 fi
 
-if type -t prompt_vcs > /dev/null 2>&1; then
-    PS1="\$(prompt_vcs) ${PS1}"
+if inside_emacs; then
+    PS1="\\[\$(emacs_sync_pwd)\\]${PS1}"
 fi
