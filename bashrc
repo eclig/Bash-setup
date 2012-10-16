@@ -70,9 +70,7 @@ emacs_sync_pwd () {
         cwd="$PWD";
     fi;
 
-    if inside_emacs; then
-        echo -en "\e[|pwdsync:$cwd|";
-    fi
+    echo -en "\e[|pwdsync:$cwd|";
 }
 
 esetenv () {
