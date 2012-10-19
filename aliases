@@ -116,7 +116,7 @@ causes this message to be displayed.  With no option show the value of PATH."
     fi
 }
 
-alias ver='echo $BASH_VERSION $MACHTYPE'
+alias ver='echo Bash \($BASH\), version $BASH_VERSION $MACHTYPE'
 
 ff () {
     local dir
