@@ -55,25 +55,65 @@ alias la='ls -A'
 alias ll='ls -l'
 alias llt='ls -ltr'
 
-alias path='echo -e "${PATH//:/\\n}"'
-pathed () {
-    local TMP=${TMP:-/tmp}
+path () {
+    local action='display';
 
-    if [[ ${OSTYPE} == cygwin ]]; then
-        TMP="$(cygpath -w "$TMP" | sed -e 's/\\/\//g')";
-    elif [[ ${OSTYPE} == msys ]]; then
-        TMP="$(echo "$TMP" | sed -e 's|^/\\(.\\)/|\\1:/|')";
+    local OPTARG OPTIND
+    while getopts ":elh" opt; do
+        case "$opt" in
+            e)
+                action='edit'
+                ;;
+            l)
+                action='display'
+                ;;
+            h)
+                echo "Usage: $FUNCNAME [-elh]
+Display (-l) or edit (-e) the PATH environment variable, one entry per line.
+Use the value of the variable EDITOR to edit the entries.  The option -h
+causes this message to be displayed.  With no option show the value of PATH."
+                return 0
+                ;;
+            \?)
+                echo "$FUNCNAME: invalid option: -$OPTARG.  Try \`$FUNCNAME -h'" >&2
+                return 1
+                ;;
+        esac
+    done
+
+    shift $((OPTIND - 1))
+
+    if [[ -n "$1" ]]; then
+        echo "$FUNCNAME: too many arguments: $@" >&2
+        return 1
+    fi
+
+    if [[ "$action" == edit ]]; then
+        if [[ -z "$EDITOR" ]]; then
+            echo "$FUNCNAME: environment variable EDITOR is not set" >&2
+            return 1
+        fi
+
+        local TMP=${TMP:-/tmp}
+
+        if [[ "${OSTYPE}" == cygwin ]]; then
+            TMP="$(cygpath -w "$TMP" | sed -e 's/\\/\//g')";
+        elif [[ "${OSTYPE}" == msys ]]; then
+            TMP="$(echo "$TMP" | sed -e 's|^/\\(.\\)/|\\1:/|')";
+        else
+            TMP="$TMP";
+        fi;
+
+        local TEMPFILE="${TMP}/path-$$-$SECONDS-$RANDOM"
+        echo -e "${PATH//:/\\n}" > "${TEMPFILE}"
+        $EDITOR "${TEMPFILE}"
+        PATH=$(sed -e :a -e '$!N; s/\n/:/; ta' "${TEMPFILE}")
+
+        ## can't use `trap' *locally* for that, traps are global
+        command rm -f "${TEMPFILE}"
     else
-        TMP="$TMP";
-    fi;
-
-    local TEMPFILE="${TMP}/path-$$-$RANDOM"
-    echo -e "${PATH//:/\\n}" > "${TEMPFILE}"
-    $EDITOR "${TEMPFILE}"
-    PATH=$(sed -e :a -e '$!N; s/\n/:/; ta' "${TEMPFILE}")
-
-    ## can't we use `trap' *locally* for that?
-    rm -f "${TEMPFILE}"
+        echo -e "${PATH//:/\\n}"
+    fi
 }
 
 alias ver='echo $BASH_VERSION $MACHTYPE'
