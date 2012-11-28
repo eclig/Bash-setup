@@ -269,3 +269,7 @@ fi
 if inside_emacs; then
     PS1="\\[\$(emacs_sync_pwd)\\]${PS1}"
 fi
+
+## http://www.reddit.com/r/commandline/comments/12g76v/how_to_automatically_source_zshrc_in_all_open/
+## kill -USR1 $(ps | awk '/\/bash/ {print $1}') 2> /dev/null
+trap "source ~/.bash.d/bashrc" USR1
