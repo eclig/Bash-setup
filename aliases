@@ -40,7 +40,9 @@ alias dc='darcs changes --summary LL'
 alias dr='darcs record'
 alias dww='darcs whatsnew --unified --look-for-adds'
 alias e='emacsclient -n'
-alias ediff='Perl -S ediff.pl'
+if running_cygwin; then
+    alias ediff='ediff.cmd'
+fi
 alias j='jobs -l'
 
 if inside_emacs; then
