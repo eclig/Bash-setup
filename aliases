@@ -2,7 +2,15 @@
 
 alias aliases='source ~/.bash.d/aliases'
 
-alias 1='cd -1'
+alias  1='cd -1'
+alias  2='cd -2'
+alias  3='cd -3'
+alias  4='cd -4'
+alias  5='cd -5'
+alias  6='cd -6'
+alias  7='cd -7'
+alias  8='cd -8'
+alias  9='cd -9'
 alias 10='cd -10'
 alias 11='cd -11'
 alias 12='cd -12'
@@ -13,21 +21,35 @@ alias 16='cd -16'
 alias 17='cd -17'
 alias 18='cd -18'
 alias 19='cd -19'
-alias 2='cd -2'
 alias 20='cd -20'
 alias 21='cd -21'
 alias 22='cd -22'
-alias 3='cd -3'
-alias 4='cd -4'
-alias 5='cd -5'
-alias 6='cd -6'
-alias 7='cd -7'
-alias 8='cd -8'
-alias 9='cd -9'
 
 alias b='cd -'
 
+alias u='cd ..'
+alias uu='cd ../..'
+alias uuu='cd ../../..'
+alias uuuu='cd ../../../..'
+alias uuuuu='cd ../../../../..'
+
 alias cp='\cp -ivb'
+alias mv='\mv -ivb'
+alias mkdir='\mkdir -p'
+
+if inside_emacs; then
+    ls_color='always'
+else
+    ls_color='auto'
+fi
+
+alias ls="ls -xBFh -T0 --color=$ls_color"
+alias lst='ls -tr'
+alias la='ls -A'
+alias ll='ls -l'
+alias llt='ls -ltr'
+
+alias j='jobs -l'
 
 save () {
     local now=$(date +'%Y%m%dT%k%m%S')
@@ -43,19 +65,6 @@ alias e='emacsclient -n'
 if running_cygwin; then
     alias ediff='ediff.cmd'
 fi
-alias j='jobs -l'
-
-if inside_emacs; then
-    ls_color='always'
-else
-    ls_color='auto'
-fi
-
-alias ls="ls -xBFh -T0 --color=$ls_color"
-alias lst='ls -tr'
-alias la='ls -A'
-alias ll='ls -l'
-alias llt='ls -ltr'
 
 path () {
     local action='display';
@@ -142,9 +151,6 @@ if inside_emacs; then
     ack () { command ack "$@" </dev/null; }
 fi
 
-alias mkdir='\mkdir -p'
-alias mv='\mv -ivb'
-
 alias txj='tar -xjf'
 alias txz='tar -xzf'
 
@@ -183,12 +189,6 @@ x () {
         echo "File '$1' does not exist"
     fi
 }
-
-alias u='cd ..'
-alias uu='cd ../..'
-alias uuu='cd ../../..'
-alias uuuu='cd ../../../..'
-alias uuuuu='cd ../../../../..'
 
 map () {
     if [ $# -le 1 ]; then
@@ -248,30 +248,12 @@ alias rs='eval $(resize)'
 
 alias op='cygstart'
 
-alias update-cfg='Perl -I e:/home/ecl/perl/update-config e:/home/ecl/perl/update-config/update-config.pl'
-alias xml_validate='e:/qx29999/tools/xml_validate/validate.pl'
-
-alias bms08='desktop CMSynergy\ 6.4\ -\ bms08.lnk'
-alias swepit='desktop SWEPiT.lnk'
-
 md () {
     mkdir --parents "$1" && cd "$1"
 }
 
 hash -p $(type -p ccm.bat) ccm  > /dev/null 2>&1
 hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
-
-repo='https://asc-repo.bmwgroup.net/svn/asc045'
-projs="${repo}/Projects"
-
-svn16 () { PATH=/cygdrive/e/tools/Subversion-1.6.11/bin:"$PATH" "$@"; }
-svn17 () { PATH=/cygdrive/c/Progra~1/SlikSvn/bin:"$PATH" "$@"; }
-tort17 () { PATH=/cygdrive/c/Progra~1/TortoiseSVN/bin:"$PATH" "$@"; }
-
-perl510 () {
-    local PERL510_DIR="/cygdrive/c/tools/Perl_5_10_0_1005"
-    PATH="${PERL510_DIR}/bin":"$PATH" "$@";
-}
 
 alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
@@ -289,20 +271,3 @@ repobrowser () {
     TortoiseProc /command:repobrowser /path:"$1" &
     disown $!
 }
-
-proxy () {
-    local pwd
-    read -s -p "password: " pwd
-    echo
-
-    for p in http https; do
-        export ${p}_proxy="${p}://${USER}${pwd:+:${pwd}}@proxy.muc:8080"
-    done
-}
-
-alias brotzeit='cygstart //europe.bmw.corp/winfs/EA-org/EA-4_Org/EA-41/EA-41/40_Allgemein/04_Austausch/Ern/Brotzeit/aktuelle_Brotzeit_Bestellliste.xls'
-
-#
-alias cfg='configure.cmd --walayout=absolute'
-alias mkg='mk MAKE_DBG=ON debug=1'
-alias mkx='mk expert=1'
