@@ -187,6 +187,45 @@ fi
 
 CDPATH=.:..:~
 
+cdd () {
+    local start dirname 
+
+    if [[ $# -eq 0 ]]; then
+        echo 'missing args...' >&2
+        return 1
+    elif [[ $# -eq 1 ]]; then
+        start="."
+        dirname="$1"
+    elif [[ $# -eq 2 ]]; then
+        start="$1"
+        dirname="$2"
+    else
+        echo 'too many args...' >&2
+        return 1
+    fi
+
+    local -a dirs=()
+
+    for line in $(find "$start" -type d -iname "$dirname" 2>/dev/null | head -n 10 | sort); do
+        dirs=(${dirs[@]} "$line")
+    done
+
+    case ${#dirs[@]} in
+        0)
+            false
+            ;;
+        1) 
+            cd "${dirs[@]}"
+            ;;
+        *)
+            select dir in "${dirs[@]}" ; do
+                cd "$dir"
+                break
+            done
+            ;;
+    esac
+}
+
 hash () {
     ## accepts "hash foo=/path/to/foo" as zsh does
     if [[ $# -eq 1 && $1 == *=* ]]; then
