@@ -4,6 +4,8 @@ alias xml_validate='e:/qx29999/tools/xml_validate/validate.pl'
 repo='https://asc-repo.bmwgroup.net/svn/asc045'
 projs="${repo}/Projects"
 
+alias asc='e:/tools/ascent/cli/asc.bat'
+
 svn16 () { PATH=/cygdrive/e/tools/Subversion-1.6.11/bin:"$PATH" "$@"; }
 svn17 () { PATH=/cygdrive/c/Progra~1/SlikSvn/bin:"$PATH" "$@"; }
 tort17 () { PATH=/cygdrive/c/Progra~1/TortoiseSVN/bin:"$PATH" "$@"; }
