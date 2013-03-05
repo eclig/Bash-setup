@@ -66,6 +66,17 @@ if running_cygwin; then
     alias ediff='ediff.cmd'
 fi
 
+diff4ediff () {
+    ## instead of showing the differences, this only prints the line
+    ##     ediff <file1> <file2>
+    ## if the files differ.
+    ## In Emacs Shell-mode pressing <RET> on such a line cause it to
+    ## be executed.
+    ## Useful when used with the `--recursive' flag to selectively
+    ## diff some of the files using `ediff'.
+    diff --brief "$@" | perl -ne 'm|^Files (\S+) and (\S+) differ$| && print qq(ediff "$1" "$2" \n);'
+}
+
 path () {
     local action='display';
 
