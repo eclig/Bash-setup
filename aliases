@@ -269,6 +269,7 @@ hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
 alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
+svnsx () { svn status "$@" | grep -v '^\(X\|Perform\|$\)' ; }
 alias svnd='svn diff'
 alias svnl='svn log --limit 10'
 alias svn.news='svn log -rBASE:HEAD'
