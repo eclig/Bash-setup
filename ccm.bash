@@ -1,5 +1,7 @@
 #!/bin/bash
 
+hash -p $(type -p ccm.bat) ccm  > /dev/null 2>&1
+
 _CCM_PASSWORD_FILE="$HOME/.ccm_password"
 
 _ccm_read_password () {

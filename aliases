@@ -263,9 +263,6 @@ md () {
     mkdir --parents "$1" && cd "$1"
 }
 
-hash -p $(type -p ccm.bat) ccm  > /dev/null 2>&1
-hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
-
 alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
