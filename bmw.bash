@@ -28,6 +28,10 @@ proxy () {
     done
 }
 
+for p in http{,s}; do
+    export ${p}_proxy="${p}://proxy.muc:8080";
+done
+
 alias brotzeit='cygstart //europe.bmw.corp/winfs/EA-org/EA-4_Org/EA-41/EA-41/40_Allgemein/04_Austausch/Ern/Brotzeit/aktuelle_Brotzeit_Bestellliste.xls'
 
 alias cfg='configure.cmd --walayout=absolute'
