@@ -49,6 +49,14 @@ alias la='ls -A'
 alias ll='ls -l'
 alias llt='ls -ltr'
 
+lsnew () {
+    if [[ $# -eq 0 ]]; then
+        set "."
+    fi
+
+    find "$@" -mtime -1 -ls
+}
+
 alias j='jobs -l'
 
 save () {
