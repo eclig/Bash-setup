@@ -53,6 +53,10 @@ term_title () {
         *screen*)
             echo -en "\ek$*\e\\"
         ;;
+        emacs)
+            type -t emacsclient > /dev/null 2>&1 && \
+                emacsclient --eval "(and (fboundp 'with-buffer-hosting-pid) (with-buffer-hosting-pid $$ (rename-buffer (format \"*shell: %s*\" \"$1\") t)))" > /dev/null
+        ;;
     esac
 }
 
