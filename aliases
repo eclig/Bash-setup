@@ -168,6 +168,9 @@ gg () { grep -r "$@" . ; }
 
 if inside_emacs; then
     ack () { command ack "$@" </dev/null; }
+    if type -t eshell_find_dired > /dev/null 2>&1; then
+        alias ff=eshell_find_dired
+    fi
 fi
 
 alias txj='tar -xjf'
@@ -225,8 +228,8 @@ map () {
 
 hr () {
     history -n
-    if [[ ${INSIDE_EMACS} == *comint* ]] && type emacsclient > /dev/null 2>&1; then
-        emacsclient --eval "(and (fboundp 'with-buffer-hosting-pid) (with-buffer-hosting-pid $$ (comint-read-input-ring)))" > /dev/null
+    if [[ ${INSIDE_EMACS} == *comint* ]] && type -t eshell_read_history > /dev/null 2>&1; then
+        eshell_read_history
     fi
 }
 alias hs='history -a'

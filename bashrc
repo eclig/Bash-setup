@@ -31,6 +31,10 @@ add_to_path "~/.bin/$HOSTTYPE-$OSTYPE"
 
 export EDITOR=emacsclient
 
+if [[ -f ~/.bash.d/emacs.bash ]]; then
+    . ~/.bash.d/emacs.bash
+fi
+
 export ACK_OPTIONS='--nogroup --with-filename --all'
 
 inside_emacs () {
@@ -54,8 +58,8 @@ term_title () {
             echo -en "\ek$*\e\\"
         ;;
         emacs)
-            type -t emacsclient > /dev/null 2>&1 && \
-                emacsclient --eval "(and (fboundp 'with-buffer-hosting-pid) (with-buffer-hosting-pid $$ (rename-buffer (format \"*shell: %s*\" \"$1\") t)))" > /dev/null
+            type -t eshell_set_buffer_name > /dev/null 2>&1 && \
+                eshell_set_buffer_name "$1"
         ;;
     esac
 }
@@ -77,27 +81,6 @@ emacs_sync_pwd () {
     echo -en "\e[|pwdsync:$cwd|";
 }
 
-esetenv () {
-    type -t ${EMACSCLIENT:-emacsclient} > /dev/null 2>&1 || return 1
-
-    local evalstr;
-    for varvalue in "$@"; do
-        local var=${varvalue%%=*}
-        local value=${varvalue#*=}
-        if [[ -z "${value}" ]]; then
-            value="nil"
-        else
-            if [[ "${value}" == "${var}" ]]; then
-                value="${!var}"
-            fi
-            value="\"$(printf "%q" "${value}")\""
-        fi
-
-        evalstr="${evalstr} (setenv \"${var}\" ${value})"
-    done
-    ${EMACSCLIENT:-emacsclient} --eval "(progn$evalstr)"
-}
-
 agentize () {
     local SSH_AGENT_CONFIG="$HOME/.ssh_agent_session"
 
@@ -116,6 +99,7 @@ agentize () {
     fi
 
     [[ -n "$INSIDE_EMACS" && -n "$SSH_AUTH_SOCK" && -n "$SSH_AGENT_PID" ]] && \
+        type -t esetenv > /dev/null 2>&1 && \
         esetenv SSH_AUTH_SOCK SSH_AGENT_PID
 
     echo Agent pid $SSH_AGENT_PID
