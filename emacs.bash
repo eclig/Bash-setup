@@ -3,7 +3,9 @@ eshell_find_dired () {
         echo "Usage: $FUNCNAME [directory] <pattern>" >&2
         return 1
     elif [[ $# -eq 1 ]]; then
-        set "." "-iname" "$@"
+        set "." "-iname" "$1"
+    elif [[ $# -eq 2 ]]; then
+        set "$1" "-iname" "$2"
     fi
 
     local dir="$1"
