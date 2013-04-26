@@ -54,7 +54,7 @@ lsnew () {
         set "."
     fi
 
-    find "$@" -mtime -1 -ls
+    find "$@" -mtime -1 -print0 | xargs -0 --no-run-if-empty ls -ldht
 }
 
 alias j='jobs -l'
