@@ -148,29 +148,15 @@ causes this message to be displayed.  With no option show the value of PATH."
 
 alias ver='echo Bash \($BASH\), version $BASH_VERSION $MACHTYPE'
 
-ff () {
-    local dir
-
-    if [[ $# -eq 0 ]]; then
-        echo 'da fehlt was...' >&2
-        return 1
-    elif [[ $# -eq 1 ]]; then
-        dir="."
-    else
-        dir="$1"
-        shift
-    fi
-
-    find "$dir" -iname "$@"
-}
-
 gg () { grep -r "$@" . ; }
 
 if inside_emacs; then
     ack () { command ack "$@" </dev/null; }
-    if type -t eshell_find_dired > /dev/null 2>&1; then
-        alias ff=eshell_find_dired
-    fi
+fi
+
+## `quick_find' is defined in "emacs.bash"
+if type -t quick_find > /dev/null 2>&1; then
+    alias ff=quick_find
 fi
 
 alias txj='tar -xjf'
