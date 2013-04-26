@@ -1,4 +1,4 @@
-eshell_find_dired () {
+quick_find () {
     if [[ $# -eq 0 ]]; then
         echo "Usage: $FUNCNAME [directory] <pattern>" >&2
         return 1
@@ -10,7 +10,12 @@ eshell_find_dired () {
 
     local dir="$1"
     shift
-    _eshell_emacsclient --eval "(find-dired \"${dir}\" \"$*\")" > /dev/null
+
+    if [[ ${INSIDE_EMACS} == *comint* ]]; then
+        _eshell_emacsclient --eval "(find-dired \"${dir}\" \"$*\")" > /dev/null
+    else
+        find "$dir" "$@" -print0 | xargs -0 --no-run-if-empty ls -ldht
+    fi
 }
 
 eshell_set_buffer_name () {
