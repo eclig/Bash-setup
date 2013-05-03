@@ -10,8 +10,11 @@ svn16 () { PATH=/cygdrive/e/tools/Subversion-1.6.11/bin:"$PATH" "$@"; }
 svn17 () { PATH=/cygdrive/c/Progra~1/SlikSvn/bin:"$PATH" "$@"; }
 tort17 () { PATH=/cygdrive/c/Progra~1/TortoiseSVN/bin:"$PATH" "$@"; }
 
-[[ -f f:/apps/PortableGit-1.7.4/bin/git.exe ]] && \
+if [[ -f f:/Apps/PortableGit-1.8.1.2-preview20130201/bin/git.exe ]]; then
+    hash -p f:/Apps/PortableGit-1.8.1.2-preview20130201/bin/git.exe git > /dev/null 2>&1
+elif [[ -f f:/apps/PortableGit-1.7.4/bin/git.exe ]]; then
     hash -p f:/apps/PortableGit-1.7.4/bin/git.exe git > /dev/null 2>&1
+fi
 
 perl510 () {
     local PERL510_DIR="/cygdrive/c/tools/Perl_5_10_0_1005"
