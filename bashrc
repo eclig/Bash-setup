@@ -68,19 +68,6 @@ cygpath2w32 () {
     cygpath --windows "$1" | sed -e 's|\\|/|g';
 }
 
-emacs_sync_pwd () {
-    local cwd;
-    if running_cygwin; then
-        cwd="$(cygpath2w32 "$PWD")";
-    elif running_msys; then
-        cwd="$(echo "$PWD" | sed -e 's@^/\(.\)\(/\|$\)@\1:/@')";
-    else
-        cwd="$PWD";
-    fi;
-
-    echo -en "\e[|pwdsync:$cwd|";
-}
-
 agentize () {
     local SSH_AGENT_CONFIG="$HOME/.ssh_agent_session"
 
@@ -297,7 +284,7 @@ else
     PS1='\[\e[1;34m\]\w\[\e[0m\]\$ '
 fi
 
-if inside_emacs; then
+if inside_emacs && type -t emacs_sync_pwd > /dev/null 2>&1; then
     PS1="\\[\$(emacs_sync_pwd)\\]${PS1}"
 fi
 

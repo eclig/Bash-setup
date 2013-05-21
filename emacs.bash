@@ -18,6 +18,21 @@ quick_find () {
     fi
 }
 
+## for use with Emacs' "pwdsync" library:
+## https://groups.google.com/group/gnu.emacs.sources/msg/5a771f9f7c5983a1?dmode=source&output=gplain&noredirect
+emacs_sync_pwd () {
+    local cwd;
+    if [[ ${OSTYPE} == cygwin ]]; then
+        cwd="$(cygpath --windows "$PWD" | sed -e 's|\\|/|g')";
+    elif [[ ${OSTYPE} == msys ]]; then
+        cwd="$(echo "$PWD" | sed -e 's@^/\(.\)\(/\|$\)@\1:/@')";
+    else
+        cwd="$PWD";
+    fi;
+
+    echo -en "\e[|pwdsync:$cwd|";
+}
+
 eshell_set_buffer_name () {
     _eshell_emacsclient --eval "(and (fboundp 'with-buffer-hosting-pid) (with-buffer-hosting-pid $$ (rename-buffer (format \"*shell: %s*\" \"$1\") t)))" > /dev/null
 }
