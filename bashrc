@@ -268,6 +268,10 @@ elif [[ -f ~/.bash_aliases ]]; then
     . ~/.bash_aliases
 fi
 
+if [[ -f /etc/bash_completion ]]; then
+    . /etc/bash_completion
+fi
+
 for f in ccm.bash vcs.bash; do
     if [[ -f ~/.bash.d/"$f" ]]; then
         . ~/.bash.d/"$f"
