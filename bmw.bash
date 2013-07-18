@@ -4,6 +4,24 @@ alias xml_validate='e:/qx29999/tools/xml_validate/validate.pl'
 repo='https://asc-repo.bmwgroup.net/svn/asc045'
 projs="${repo}/Projects"
 
+make () {
+    if [[ -e ./make.bat ]]; then
+        local LOG=",make.log"
+
+        date >> "$LOG"
+        echo "make.bat $*" >> "$LOG"
+        nice -n 20 time ./make.bat $* 2>&1 | tee --append "$LOG"
+        date >> "$LOG"
+        echo -e '\f' >> "$LOG"
+    else
+        command make $*
+    fi
+}
+
+alias mkx='make expert=1'
+alias mkg='make debug=1 MAKE_DBG=ON'
+mks () { make show x="$1"; }
+
 alias asc='e:/tools/ascent/cli/asc.bat'
 
 svn16 () { PATH=/cygdrive/e/tools/Subversion-1.6.11/bin:"$PATH" "$@"; }
