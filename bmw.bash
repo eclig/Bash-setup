@@ -39,6 +39,11 @@ perl510 () {
     PATH="${PERL510_DIR}/bin":"$PATH" "$@";
 }
 
+perl516 () {
+    local PERL516_DIR="/cygdrive/c/tools/Perl_5_16_1_1/perl"
+    PATH="${PERL516_DIR}/bin":"$PATH" "$@";
+}
+
 proxy () {
     local pwd
     read -s -p "password: " pwd
