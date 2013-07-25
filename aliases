@@ -159,6 +159,10 @@ if type -t quick_find > /dev/null 2>&1; then
     alias ff=quick_find
 fi
 
+if type -t quick_grep > /dev/null 2>&1; then
+    alias gg=quick_grep
+fi
+
 alias txj='tar -xjf'
 alias txz='tar -xzf'
 

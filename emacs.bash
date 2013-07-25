@@ -18,6 +18,23 @@ quick_find () {
     fi
 }
 
+quick_grep () {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: $FUNCNAME <pattern> [directory|file] ..." >&2
+        return 1
+    elif [[ $# -eq 1 ]]; then
+        set -- "-r" "$1" "."
+    elif [[ $# -eq 2 ]]; then
+        set -- "-r" "$@"
+    fi
+
+    if [[ ${INSIDE_EMACS} == *comint* ]]; then
+        _eshell_emacsclient --eval "(grep \"grep -s -n $*\")" > /dev/null
+    else
+        grep "$@"
+    fi
+}
+
 ## for use with Emacs' "pwdsync" library:
 ## https://groups.google.com/group/gnu.emacs.sources/msg/5a771f9f7c5983a1?dmode=source&output=gplain&noredirect
 emacs_sync_pwd () {
