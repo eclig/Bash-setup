@@ -60,9 +60,33 @@ lsnew () {
 alias j='jobs -l'
 
 save () {
-    local now=$(date +'%Y%m%dT%k%m%S')
+    local timeformat='%Y%m%dT%H%M%S'
+    local OPTARG OPTIND
+    local time
+    while getopts ":nh" opt; do
+        case "$opt" in
+            n)
+                time=$(date +"${timeformat}")
+                ;;
+            h)
+                echo "Usage: $FUNCNAME [-n] <file> ...
+Make a backup copy of <file> named <file>.~<timestample>~.
+Here <timestample> is of the form \"<YYYY><MM><DD>T<hh><mm><ss>\",
+corresponding to the modification time of <file>.
+If the option \"-n\" (as in \"now\") is used, use the current time instead."
+                return 0
+                ;;
+            \?)
+                echo "$FUNCNAME: invalid option: -$OPTARG.  Try \`$FUNCNAME -h'" >&2
+                return 1
+                ;;
+        esac
+    done
+
+    shift $((OPTIND - 1))
+
     for f in "${@%/}"; do
-        \cp --archive --interactive -- "${f}" "${f}.~${now}~"
+        \cp --archive --interactive -- "${f}" "${f}.~${time:-$(date --reference="${f}" +'%Y%m%dT%H%M%S')}~"
     done
 }
 
