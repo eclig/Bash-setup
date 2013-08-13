@@ -12,7 +12,10 @@ quick_find () {
     shift
 
     if [[ ${INSIDE_EMACS} == *comint* ]]; then
-        _eshell_emacsclient --eval "(find-dired \"${dir}\" \"$*\")" > /dev/null
+        ## In the command substitution bellow we take advantage of the
+        ## fact that `printf' reuses the format as necessary to
+        ## consume all of the arguments.
+        _eshell_emacsclient --eval "(find-dired \"${dir}\" (mapconcat 'shell-quote-argument '($(printf '"%s" ' "$@")) \" \"))" > /dev/null
     else
         find "$dir" "$@" -print0 | xargs -0 --no-run-if-empty ls -ldht
     fi
