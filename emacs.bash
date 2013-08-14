@@ -31,8 +31,15 @@ quick_grep () {
         set -- "-r" "$@"
     fi
 
+    local grep_cmd
+    if type -t ack > /dev/null 2>&1; then
+        grep_cmd='ack --nofilter --nogroup --with-filename'
+    else
+        grep_cmd='grep --no-messages --line-number'
+    fi
+
     if [[ ${INSIDE_EMACS} == *comint* ]]; then
-        _eshell_emacsclient --eval "(grep \"grep -s -n $*\")" > /dev/null
+        _eshell_emacsclient --eval "(grep \"${grep_cmd} $*\")" > /dev/null
     else
         grep "$@"
     fi
