@@ -35,7 +35,10 @@ if [[ -f ~/.bash.d/emacs.bash ]]; then
     . ~/.bash.d/emacs.bash
 fi
 
-export ACK_OPTIONS='--nogroup --with-filename --all'
+export ACK_OPTIONS='--nogroup --with-filename --smart-case'
+if [[ -n "$INSIDE_EMACS" ]]; then
+    ACK_OPTIONS="--nofilter $ACK_OPTIONS"
+fi
 
 inside_emacs () {
     test -n "$INSIDE_EMACS"
