@@ -40,7 +40,7 @@ z() {
     } else for( i in rank ) print i "|" rank[i] "|" time[i]
    }
   ' "$datafile" 2>/dev/null > "$datafile.tmp"
-  mv -f "$datafile.tmp" "$datafile"
+  \mv -f "$datafile.tmp" "$datafile"
  elif [ "$1" = "--complete" ]; then
   # tab completion
   awk -v q="$2" -F"|" '
@@ -136,7 +136,7 @@ z() {
   if [ $? -gt 0 ]; then
    rm -f "$datafile.tmp"
   else
-   mv -f "$datafile.tmp" "$datafile"
+   \mv -f "$datafile.tmp" "$datafile"
    [ "$cd" ] && cd "$cd"
   fi
  fi
