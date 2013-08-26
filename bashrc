@@ -60,9 +60,11 @@ term_title () {
         *screen*)
             echo -en "\ek$*\e\\"
         ;;
-        emacs)
-            type -t eshell_set_buffer_name > /dev/null 2>&1 && \
-                eshell_set_buffer_name "$1"
+        *)
+            if inside_emacs; then
+                type -t eshell_set_buffer_name > /dev/null 2>&1 && \
+                    eshell_set_buffer_name "$1"
+            fi
         ;;
     esac
 }
