@@ -277,7 +277,7 @@ if [[ -f /etc/bash_completion ]]; then
     . /etc/bash_completion
 fi
 
-for f in ccm.bash vcs.bash; do
+for f in ccm.bash vcs.bash z.bash; do
     if [[ -f ~/.bash.d/"$f" ]]; then
         . ~/.bash.d/"$f"
     fi
