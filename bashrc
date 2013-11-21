@@ -107,6 +107,8 @@ prompt_command () {
     else
         term_title "${PWD##*/}";
     fi;
+    type -t z > /dev/null 2>&1 && \
+        z --add "$(pwd -P)"
     history -a                  # append history to the history file
     $xtrace_status
 }
