@@ -291,6 +291,7 @@ md () {
 alias svn='svn --non-interactive'
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
+svn-delete-missing () { svn rm $( svn status "$@" | sed -e '/^!/!d' -e 's/^!//' ) ; }
 svnsx () { svn status "$@" | grep -v '^\(X\|Perform\|$\)' ; }
 alias svnd='svn diff'
 alias svnl='svn log --limit 10'
