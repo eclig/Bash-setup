@@ -58,6 +58,8 @@ for p in http{,s}; do
     export ${p}_proxy="${p}://proxy.muc:8080";
 done
 
+alias msi_install="cscript.exe /nologo '$BMS_INSTALL_SERVER\install.js'"
+
 alias brotzeit='cygstart //europe.bmw.corp/winfs/EA-org/EA-4_Org/EA-41/EA-41/40_Allgemein/04_Austausch/Ern/Brotzeit/aktuelle_Brotzeit_Bestellliste.xls'
 
 add_to_path /cygdrive/f/bin
