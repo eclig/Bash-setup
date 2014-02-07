@@ -174,10 +174,6 @@ alias ver='echo Bash \($BASH\), version $BASH_VERSION $MACHTYPE'
 
 gg () { grep -r "$@" . ; }
 
-if inside_emacs; then
-    ack () { command ack "$@" </dev/null; }
-fi
-
 ## `quick_find' is defined in "emacs.bash"
 if type -t quick_find > /dev/null 2>&1; then
     alias ff=quick_find
