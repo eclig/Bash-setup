@@ -62,8 +62,8 @@ alias msi_install="cscript.exe /nologo '$BMS_INSTALL_SERVER\install.js'"
 
 alias brotzeit='cygstart //europe.bmw.corp/winfs/EA-org/EA-4_Org/EA-41/EA-41/40_Allgemein/04_Austausch/Ern/Brotzeit/aktuelle_Brotzeit_Bestellliste.xls'
 
-add_to_path /cygdrive/f/bin
-add_to_path /cygdrive/f/Apps/PortableGit-1.8.1.2/bin
+PATH=$PATH:/cygdrive/f/bin
+PATH=$PATH:/cygdrive/f/Apps/PortableGit-1.8.1.2/bin
 
 alias cfg='configure.cmd --walayout=absolute'
 alias mkg='mk MAKE_DBG=ON debug=1'
