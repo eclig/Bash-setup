@@ -290,7 +290,7 @@ if [[ -n "$BMW" && -f ~/.bash.d/bmw.bash ]]; then
 fi
     
 if running_cygwin && type -t cygpath2w32 > /dev/null 2>&1; then
-    PS1='\[\e[1;34m\]$(cygpath2w32 "$PWD")\[\e[0m\]\$ '
+    PS1='\[\e[1;34m\]$(cygpath2w32 "${PWD/#$HOME/~}")\[\e[0m\]\$ '
 else
     PS1='\[\e[1;34m\]\w\[\e[0m\]\$ '
 fi
