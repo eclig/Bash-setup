@@ -1,5 +1,5 @@
 alias update-cfg='Perl -I e:/home/ecl/perl/update-config e:/home/ecl/perl/update-config/update-config.pl'
-alias xml_validate='e:/qx29999/tools/xml_validate/validate.pl'
+alias xml_validate='e:/qx29999/projs/misc-tools/xml_validate/validate.pl'
 
 repo='https://asc-repo.bmwgroup.net/svn/asc045'
 projs="${repo}/Projects"
