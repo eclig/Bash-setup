@@ -183,6 +183,14 @@ if type -t quick_grep > /dev/null 2>&1; then
     alias gg=quick_grep
 fi
 
+if [[ ${INSIDE_EMACS} == *comint* ]] && type -t eshell_set_buffer_name > /dev/null 2>&1; then
+    ## "name buffer"
+    nb () {
+        eshell_set_buffer_name "$1"
+    }
+fi
+
+
 alias txj='tar -xjf'
 alias txz='tar -xzf'
 
