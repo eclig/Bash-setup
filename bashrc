@@ -164,7 +164,7 @@ h () {
 
 if [[ -f ~/.bash.d/cd.bash ]]; then
     . ~/.bash.d/cd.bash
-    alias d='cdhist'
+    alias d='dirs -v'
 fi
 
 CDPATH=.:..:~
