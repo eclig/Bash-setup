@@ -311,3 +311,7 @@ repobrowser () {
     TortoiseProc /command:repobrowser /path:"$1" &
     disown $!
 }
+
+cmd-here () {
+    cmd /c start cmd
+}
