@@ -89,5 +89,5 @@ esetenv () {
 
 _eshell_emacsclient () {
     local _emacsclient="${EMACSCLIENT:-emacsclient}"
-    type -t "${_emacsclient}" > /dev/null 2>&1 && "${_emacsclient}" "$@"
+    type -t "${_emacsclient}" > /dev/null 2>&1 && "${_emacsclient}" --quiet "$@"
 }
