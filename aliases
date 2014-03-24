@@ -94,9 +94,6 @@ alias dc='darcs changes --summary LL'
 alias dr='darcs record'
 alias dww='darcs whatsnew --unified --look-for-adds'
 alias e='emacsclient -n'
-if running_cygwin; then
-    alias ediff='ediff.cmd'
-fi
 
 diff4ediff () {
     ## instead of showing the differences, this only prints the line
