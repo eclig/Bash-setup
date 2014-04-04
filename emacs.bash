@@ -84,7 +84,7 @@ esetenv () {
 
         evalstr="${evalstr} (setenv \"${var}\" ${value})"
     done
-    _eshell_emacsclient --eval "(progn$evalstr)"
+    _eshell_emacsclient --quiet --eval "(progn$evalstr)"
 }
 
 _eshell_emacsclient () {
