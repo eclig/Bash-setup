@@ -53,8 +53,8 @@ lsnew () {
     if [[ $# -eq 0 ]]; then
         set "."
     fi
-
-    find "$@" -mtime -1 -print0 | xargs -0 --no-run-if-empty ls -ldht
+    ## find . -mindepth 1 -maxdepth 1 -printf '%T@ %p\0' | sort -nrz | head
+    find "$@" -mindepth 1 -maxdepth 1 -mtime -1 -print0 | xargs --null --no-run-if-empty ls -ldht
 }
 
 alias j='jobs -l'
