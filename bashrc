@@ -154,8 +154,12 @@ h () {
     fi
 }
 
-###
+history_compress () {
+    ## http://mywiki.wooledge.org/BashFAQ/088
+    awk 'NR==FNR && !/^#/{lines[$0]=FNR;next} lines[$0]==FNR' "$HISTFILE" "$HISTFILE" > "$HISTFILE.compressed$$" && mv "$HISTFILE.compressed$$" "$HISTFILE"
+}
 
+###
 if [[ -f ~/.bash.d/cd.bash ]]; then
     . ~/.bash.d/cd.bash
     alias d='dirs -v'
