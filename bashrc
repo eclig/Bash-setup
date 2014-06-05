@@ -283,6 +283,12 @@ for f in ccm.bash vcs.bash z.bash; do
     fi
 done
 
+if type -t hostname > /dev/null 2>&1 &&
+   [[ $(hostname --domain) == toptica.com && 
+      -f ~/.bash.d/toptica.bash ]]; then
+    . ~/.bash.d/toptica.bash
+fi
+    
 if [[ -n "$BMW" && -f ~/.bash.d/bmw.bash ]]; then
     . ~/.bash.d/bmw.bash
 fi
