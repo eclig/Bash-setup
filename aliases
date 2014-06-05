@@ -187,8 +187,10 @@ if [[ ${INSIDE_EMACS} == *comint* ]] && type -t eshell_set_buffer_name > /dev/nu
     }
 fi
 
-
+alias tv='tar -vf' # let `tar' automatically guess the compression format.
+alias tx='tar -xf' # dito.
 alias txj='tar -xjf'
+alias txJ='tar -xJf'
 alias txz='tar -xzf'
 
 x () {
