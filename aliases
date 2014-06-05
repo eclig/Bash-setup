@@ -312,3 +312,7 @@ repobrowser () {
 cmd-here () {
     cmd /c start cmd
 }
+
+xterm-here () {
+    env --unset=EMACS --unset=INSIDE_EMACS PAGER=pager xterm
+}
