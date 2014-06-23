@@ -130,7 +130,7 @@ shopt -s histappend      # appends rather than overwriting the history
 shopt -s cmdhist         # save multi-line entries as one command
 
 if [[ -d ~/.bash.d ]]; then
-    HISTFILE="$HOME/.bash.d/.bash_history"
+    HISTFILE="$HOME/.bash.d/history"
 fi
 
 HISTSIZE=40960
