@@ -7,8 +7,23 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
-"\M-p": history-search-backward
-"\M-n": history-search-forward
+Meta-p: previous-history
+"\ep":  previous-history
+Meta-n: next-history
+"\en":  next-history
+Meta-r: reverse-search-history
+"\er":  reverse-search-history
+Meta-s: forward-search-history
+"\es":  forward-search-history
+Meta-P: history-search-backward
+"\eP":  history-search-backward
+Meta-N: history-search-forward
+"\eN":  history-search-forward
+
 "\C-u": kill-whole-line
 "\C-xu": undo
-"\e[19~": "find . -type f -print0 | xargs -0 -e grep -n -e "
+
+## f8
+"\e[19~": " | grep -n -e "
+## S-f8
+"\e[19;2~": "find . -type f -print0 | xargs -0 -e grep -n -e "
