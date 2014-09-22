@@ -296,7 +296,7 @@ alias escape='autossh -N -f escape'
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
 svn-delete-missing () { svn rm $( svn status "$@" | sed -e '/^!/!d' -e 's/^!//' ) ; }
-svnsx () { svn status "$@" | grep -v '^\(X\|Perform\|$\)' ; }
+svnsx () { svn status "$@" | grep -v '^\( *X\|Perform\|$\)' ; }
 alias svnd='svn diff'
 alias svnl='svn log --limit 10'
 alias svn.news='svn log -v -rBASE:HEAD'
