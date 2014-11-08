@@ -298,7 +298,9 @@ fi
 if [[ -n "$BMW" && -f ~/.bash.d/bmw.bash ]]; then
     . ~/.bash.d/bmw.bash
 fi
-    
+
+PROMPT_DIRTRIM=4
+
 if running_cygwin && type -t cygpath2w32 > /dev/null 2>&1; then
     PS1='\[\e[1;34m\]$(cygpath2w32 "${PWD/#$HOME/~}")\[\e[0m\]\$ '
 else
