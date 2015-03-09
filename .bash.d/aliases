@@ -288,7 +288,9 @@ alias rs='eval $(resize)'
 alias op='cygstart'
 
 md () {
-    mkdir --parents "$1" && cd "$1"
+    mkdir --parents "$@" || return $?
+    shift $(( $# - 1 ))
+    cd "$1"
 }
 
 alias asdf='[ -f "$HOME/.Xmodmap.$(uname -n)" ] && xmodmap "$HOME/.Xmodmap.$(uname -n)"'
