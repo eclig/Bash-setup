@@ -1,0 +1,96 @@
+
+## messages in *b*old, *b*lue blackground with *y*ellow foreground
+sorendition =b by
+hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+
+
+startup_message off
+
+## Following needs "defflow off"!
+#escape ^qq
+
+#escape ^zz
+#escape ``
+#escape ^tt
+
+escape `~
+
+deflogin off
+defflow off
+altscreen on
+
+msgwait 3
+vbell_msg "Ding!"
+
+# termcapinfo rxvt-cygwin-native ti@:te@
+# termcapinfo xterm ti@:te@
+# termcapinfo xterm-color ti@:te@
+
+## set working directory to $HOME
+chdir
+
+## no annoying audible bell
+vbell on
+
+## detach on hangup
+autodetach on
+
+
+bufferfile $HOME/.screen_exchange
+
+sorendition =s Yk
+
+#hardstatus alwayslastline "%{= ck}%{= B}%0c%{-}  %?%-Lw%?%{= BW}%n%f* %t%?(%u)%?%{= ck}%?%+Lw%?%-0="
+hardstatus alwayslastline  "%{= cb}%{= k}%0c%{-}%06= %-Lw%{= BW}%50>%n%f* %t%?(%u)%?%{-}%+Lw%<%-0="
+
+#caption splitonly "%?%F%{..Y}%?%3n %t%? [%h]%?"
+#caption splitonly "%?%F%{=b ky}%:%{=b kw}%?%3n %t%? [%h]%?"
+caption splitonly "%?%F%{=b ky}%:%{= ky}%?%3n %t%? [%h]%?"
+
+silencewait 120
+
+defscrollback 2048
+compacthist on
+#markkeys h=^B:l=^F:$=^E
+
+##  .Xdefaults:
+## XTerm*saveLines: 0
+## XTerm*scrollBar: false
+## XTerm*VT100*translations: #override\
+## Meta <KeyPress> W: string("ø") \n\
+## Shift <KeyPress> Prior: string("ø") string(0x1b) string(0x15) \n\
+## Shift <KeyPress> Next: string(0x4)
+##
+## Shift Page(Up|Down) are replaced so that they use screen
+## buffer instead of Xterm scroll lines.
+
+bind R screen sudo -s
+
+bind ^r source $HOME/.screenrc
+bind ^p colon ^p
+
+bind a time
+bind '#' eval "colon" "stuff 'number '"
+
+# remove "dangerous" bindings
+bind ^\
+bind k
+bind ^k
+bind K kill
+bind z
+bind ^Z
+
+bind N focus down
+bind P focus up
+
+bind i number
+bind I info
+
+
+#bind R remove
+bind s split
+
+bind W wrap
+bind r resize
+bind { resize -4
+bind } resize +4
