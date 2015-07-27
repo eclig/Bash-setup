@@ -167,6 +167,22 @@ causes this message to be displayed.  With no option show the value of PATH."
     fi
 }
 
+edit-executable () {
+    if [[ -z "$1" ]]; then
+        echo "usage: $FUNCNAME <executable>" >&2
+        return 1
+    fi
+
+    local executable=$(type -p "$1")
+
+    if [[ -z "$executable" ]]; then
+        echo "$FUNCNAME: could not find executable '$executable' in path" >&2
+        return 1
+    fi
+
+    ${EDITOR:-${VISUAL:-vi}} "$executable"
+}
+
 alias ver='echo Bash \($BASH\), version $BASH_VERSION $MACHTYPE'
 
 gg () { grep -r "$@" . ; }
