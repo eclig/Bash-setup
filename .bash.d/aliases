@@ -121,8 +121,10 @@ path () {
             h)
                 echo "Usage: $FUNCNAME [-elh]
 Display (-l) or edit (-e) the PATH environment variable, one entry per line.
-Use the value of the variable EDITOR to edit the entries.  The option -h
-causes this message to be displayed.  With no option show the value of PATH."
+Use the value of the variable EDITOR (alternatively VISUAL or \`vi' as a last
+resort) to edit the entries.  The option -h causes this message to be displayed.
+With no option show the value of PATH."
+
                 return 0
                 ;;
             \?)
@@ -157,7 +159,7 @@ causes this message to be displayed.  With no option show the value of PATH."
 
         local TEMPFILE="${TMP}/path-$$-$SECONDS-$RANDOM"
         echo -e "${PATH//:/\\n}" > "${TEMPFILE}"
-        $EDITOR "${TEMPFILE}"
+        ${EDITOR:-${VISUAL:-vi}} "${TEMPFILE}"
         PATH=$(sed -e :a -e '$!N; s/\n/:/; ta' "${TEMPFILE}")
 
         ## can't use `trap' *locally* for that, traps are global
