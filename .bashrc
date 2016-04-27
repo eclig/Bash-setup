@@ -98,8 +98,8 @@ agentize () {
 }
 
 prompt_command () {
-    check_exit_status;          # MUST BE THE FIRST COMMAND HERE!
-
+    ## check_exit_status;          # MUST BE THE FIRST COMMAND HERE!
+    local status=$?
     local xtrace_status=$(shopt -p -o xtrace)
     set +o xtrace
     if [[ "$PWD" == "$HOME" ]]; then
@@ -111,6 +111,7 @@ prompt_command () {
         z --add "$(pwd -P)"
     history -a                  # append history to the history file
     $xtrace_status
+    return $status
 }
 
 PROMPT_COMMAND=prompt_command

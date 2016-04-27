@@ -50,16 +50,18 @@ quick_grep () {
 ## for use with Emacs' "pwdsync" library:
 ## https://groups.google.com/group/gnu.emacs.sources/msg/5a771f9f7c5983a1?dmode=source&output=gplain&noredirect
 emacs_sync_pwd () {
-    local cwd;
+    local status=$?
+    local cwd
     if [[ ${OSTYPE} == cygwin ]]; then
-        cwd="$(cygpath --windows "$PWD" | sed -e 's|\\|/|g')";
+        cwd="$(cygpath --windows "$PWD" | sed -e 's|\\|/|g')"
     elif [[ ${OSTYPE} == msys ]]; then
-        cwd="$(echo "$PWD" | sed -e 's@^/\(.\)\(/\|$\)@\1:/@')";
+        cwd="$(echo "$PWD" | sed -e 's@^/\(.\)\(/\|$\)@\1:/@')"
     else
-        cwd="$PWD";
+        cwd="$PWD"
     fi;
 
-    echo -en "\e[|pwdsync:$cwd|";
+    echo -en "\e[|pwdsync:$cwd|"
+    return $status
 }
 
 eshell_set_buffer_name () {
