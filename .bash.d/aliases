@@ -295,14 +295,14 @@ md () {
 
 alias asdf='[ -f "$HOME/.Xmodmap.$(uname -n)" ] && xmodmap "$HOME/.Xmodmap.$(uname -n)"'
 
-alias escape='autossh -N -f escape'
+alias escape='ssh -N -f escape'
 
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
 svn-delete-missing () { svn rm $( svn status "$@" | sed -e '/^!/!d' -e 's/^!//' ) ; }
 svnsx () { svn status "$@" | grep -v '^\( *X\|Perform\|$\)' ; }
 alias svnd='svn diff'
-alias svnl='svn log --limit 10'
+alias svnl='svn log --use-merge-history --limit 10'
 alias svn.news='svn log -v -rBASE:HEAD'
 alias svn.ext='svn pg svn:externals'
 function svn.url { svn info "$@" 2>/dev/null | awk -F': ' '$1 == "URL" {print $2}' ; }
@@ -311,6 +311,7 @@ alias gits='git status --short --branch'
 alias gitl="git log --name-status --pretty=format:'%h %s (%an, %ar)' -n 10"
 
 alias ipaddr="curl -s http://checkip.dyndns.com/ | sed 's/[^0-9\.]//g'"
+alias ipsearch="dig +short"
 
 repobrowser () {
     ## http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-automation.html#tsvn-automation-basics
@@ -325,3 +326,5 @@ cmd-here () {
 xterm-here () {
     env --unset=EMACS --unset=INSIDE_EMACS PAGER=pager xterm
 }
+
+alias w7='VBoxManage startvm "Windows 7"'
