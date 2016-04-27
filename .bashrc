@@ -147,7 +147,9 @@ fi
 
 HISTSIZE=40960
 HISTFILESIZE=1000000
-HISTIGNORE=" *:&:?:??:ls *:fc *:ee *:h *:e *:exit:history:help *:type *"
+HISTCONTROL="erasedups:ignoreboth"
+HISTIGNORE=" *:&:?:??:exit:ls:bg:fg:fc *:ee *:e *:exit:history:help *:type *"
+HISTTIMEFORMAT='%FT%T '
 
 
 h () {
