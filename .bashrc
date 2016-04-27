@@ -307,16 +307,26 @@ if [[ -n "$BMW" && -f ~/.bash.d/bmw.bash ]]; then
     . ~/.bash.d/bmw.bash
 fi
 
-PROMPT_DIRTRIM=4
+PROMPT_DIRTRIM=3
 
-if running_cygwin && type -t cygpath2w32 > /dev/null 2>&1; then
-    PS1='\[\e[1;34m\]$(cygpath2w32 "${PWD/#$HOME/~}")\[\e[0m\]\$ '
+if type -t tput > /dev/null 2>&1; then
+    color_set="\\[$(tput sgr0; tput setaf 4)\\]"
+    color_reset="\\[$(tput sgr0)\\]"
 else
-    PS1='\[\e[1;34m\]\w\[\e[0m\]\$ '
+    color_set=""
+    color_reset=""
 fi
 
+if [[ $HOSTNAME == lopes || $HOSTNAME == bessa ]]; then
+    PS1="\\!/\$? ${color_set}\\w${color_reset}\\$ "
+else
+    PS1="\\!/\$? \\h:${color_set}\\w${color_reset}\\$ "
+fi
+
+unset color_set color_reset
+
 if inside_emacs && type -t emacs_sync_pwd > /dev/null 2>&1; then
-    PS1="\\[\$(emacs_sync_pwd)\\]${PS1}"
+    PS1="\\[\$(emacs_sync_pwd)\\]"${PS1}
 fi
 
 if [[ -d ~/Computing/TeX/local-lib ]]; then
