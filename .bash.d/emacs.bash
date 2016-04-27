@@ -32,7 +32,9 @@ quick_grep () {
     fi
 
     local grep_cmd
-    if type -t ack > /dev/null 2>&1; then
+    if type -t ag > /dev/null 2>&1; then
+        grep_cmd='ag --line-number --smart-case --nogroup --column --stats'
+    elif type -t ack > /dev/null 2>&1; then
         grep_cmd='ack --nofilter --nogroup --with-filename'
     else
         grep_cmd='grep --no-messages --line-number'
