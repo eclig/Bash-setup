@@ -1,6 +1,11 @@
 # -*- shell-script -*-
 
+set -o noclobber
+shopt -s checkwinsize
+shopt -s cdable_vars
+
 shopt -s extglob
+shopt -s globstar
 
 [[ -z $USER && -n $USERNAME ]] && export USER="$USERNAME"
 [[ -z $USER && -n $LOGNAME  ]] && export USER="$LOGNAME"
