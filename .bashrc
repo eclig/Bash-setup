@@ -40,12 +40,6 @@ if [[ -f ~/.bash.d/emacs.bash ]]; then
     . ~/.bash.d/emacs.bash
 fi
 
-GREP_OPTIONS='--binary-files=without-match --color --exclude=tags'
-for pattern in .cvs .git .hg .svn; do
-    GREP_OPTIONS="$GREP_OPTIONS --exclude-dir=$pattern"
-done
-export GREP_OPTIONS
-
 export ACK_OPTIONS='--nogroup --with-filename --smart-case'
 if [[ -n "$INSIDE_EMACS" ]]; then
     ACK_OPTIONS="--nofilter $ACK_OPTIONS"
