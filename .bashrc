@@ -96,39 +96,6 @@ agentize () {
     echo Agent pid $SSH_AGENT_PID
 }
 
-prompt_command () {
-    local status=$?
-    local xtrace_status=$(shopt -p -o xtrace)
-    set +o xtrace
-    if [[ "$PWD" == "$HOME" ]]; then
-        term_title '~';
-    else
-        term_title "${PWD##*/}";
-    fi;
-    type -t z > /dev/null 2>&1 && \
-        z --add "$(pwd -P)"
-    history -a                  # append history to the history file
-    $xtrace_status
-    return $status
-}
-
-PROMPT_COMMAND=prompt_command
-
-check_exit_status () {
-    local status="$?";
-    local signal="";
-    if [ ${status} -ne 0 ] && [ ${status} != 128 ]; then
-        if [ ${status} -gt 128 ]; then
-            signal="$(builtin kill -l $((${status} - 128)) 2>/dev/null)";
-            if [ "$signal" ]; then
-                signal="($signal)";
-            fi;
-        fi;
-        echo -e "[Last command exited with status ${RED}${status}${NO_COLOUR}${signal}]" 1>&2;
-    fi;
-    return 0
-}
-
 ### History
 
 shopt -s histappend      # appends rather than overwriting the history
@@ -300,24 +267,11 @@ if [[ -n "$BMW" && -f ~/.bash.d/bmw.bash ]]; then
     . ~/.bash.d/bmw.bash
 fi
 
-((BASH_VERSINFO[0] >= 4)) && \
-    PROMPT_DIRTRIM=3
-
-if type -t tput > /dev/null 2>&1; then
-    color_set="\\[$(tput sgr0; tput setaf 4)\\]"
-    color_reset="\\[$(tput sgr0)\\]"
-else
-    color_set=""
-    color_reset=""
+PS1='\! \w\$ '
+if [[ -f ~/.bash.d/prompt.bash ]]; then
+    PROMPT_VCS=(svn git)
+    . ~/.bash.d/prompt.bash
 fi
-
-if [[ -z "$SSH_CONNECTION" ]]; then
-    PS1="\\!/\$? ${color_set}\\w${color_reset}\\$ "
-else
-    PS1="\\!/\$? \\h:${color_set}\\w${color_reset}\\$ "
-fi
-
-unset color_set color_reset
 
 if inside_emacs && type -t emacs_sync_pwd > /dev/null 2>&1; then
     PS1="\\[\$(emacs_sync_pwd)\\]"${PS1}
