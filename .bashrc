@@ -97,7 +97,6 @@ agentize () {
 }
 
 prompt_command () {
-    ## check_exit_status;          # MUST BE THE FIRST COMMAND HERE!
     local status=$?
     local xtrace_status=$(shopt -p -o xtrace)
     set +o xtrace
@@ -301,7 +300,8 @@ if [[ -n "$BMW" && -f ~/.bash.d/bmw.bash ]]; then
     . ~/.bash.d/bmw.bash
 fi
 
-PROMPT_DIRTRIM=3
+((BASH_VERSINFO[0] >= 4)) && \
+    PROMPT_DIRTRIM=3
 
 if type -t tput > /dev/null 2>&1; then
     color_set="\\[$(tput sgr0; tput setaf 4)\\]"
@@ -311,7 +311,7 @@ else
     color_reset=""
 fi
 
-if [[ $HOSTNAME == lopes || $HOSTNAME == bessa ]]; then
+if [[ -z "$SSH_CONNECTION" ]]; then
     PS1="\\!/\$? ${color_set}\\w${color_reset}\\$ "
 else
     PS1="\\!/\$? \\h:${color_set}\\w${color_reset}\\$ "
