@@ -33,6 +33,8 @@ alias uuu='cd ../../..'
 alias uuuu='cd ../../../..'
 alias uuuuu='cd ../../../../..'
 
+alias d='dirs -v'
+
 alias cp='\cp -ivb'
 alias mv='\mv -ivb'
 alias mkdir='\mkdir -p'

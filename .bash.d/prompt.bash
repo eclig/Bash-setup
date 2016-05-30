@@ -1,3 +1,5 @@
+PROMPT_VCS=(svn git)
+
 # Declare the PROMPT_RETURN variable as an integer
 declare -i PROMPT_RETURN
 

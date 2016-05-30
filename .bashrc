@@ -36,10 +36,6 @@ add_to_path "~/.bin/$HOSTTYPE-$OSTYPE"
 
 export EDITOR=emacsclient
 
-if [[ -f ~/.bash.d/emacs.bash ]]; then
-    . ~/.bash.d/emacs.bash
-fi
-
 export ACK_OPTIONS='--nogroup --with-filename --smart-case'
 if [[ -n "$INSIDE_EMACS" ]]; then
     ACK_OPTIONS="--nofilter $ACK_OPTIONS"
@@ -134,11 +130,6 @@ history_compress () {
 }
 
 ###
-if [[ -f ~/.bash.d/cd.bash ]]; then
-    . ~/.bash.d/cd.bash
-    alias d='dirs -v'
-fi
-
 CDPATH=.:..:~
 
 cdd () {
@@ -241,37 +232,15 @@ if [[ -f ~/.bash.d/inputrc ]]; then
     export INPUTRC=~/.bash.d/inputrc
 fi
 
-if [[ -f ~/.bash.d/aliases ]]; then
-    . ~/.bash.d/aliases
-elif [[ -f ~/.bash_aliases ]]; then
-    . ~/.bash_aliases
-fi
-
 if [[ -f /etc/bash_completion ]]; then
     . /etc/bash_completion
 fi
 
-for f in ccm.bash vcs.bash z.bash; do
-    if [[ -f ~/.bash.d/"$f" ]]; then
-        . ~/.bash.d/"$f"
-    fi
-done
-
-if type -t hostname > /dev/null 2>&1 &&
-   [[ $(hostname --domain) == toptica.com && 
-      -f ~/.bash.d/toptica.bash ]]; then
-    . ~/.bash.d/toptica.bash
-fi
-    
-if [[ -n "$BMW" && -f ~/.bash.d/bmw.bash ]]; then
-    . ~/.bash.d/bmw.bash
-fi
-
 PS1='\! \w\$ '
-if [[ -f ~/.bash.d/prompt.bash ]]; then
-    PROMPT_VCS=(svn git)
-    . ~/.bash.d/prompt.bash
-fi
+
+for f in $(find -L ~/.bash.d -name \*.bash -print 2> /dev/null); do
+    [[ -f "$f" ]] && . "$f"
+done
 
 if inside_emacs && type -t emacs_sync_pwd > /dev/null 2>&1; then
     PS1="\\[\$(emacs_sync_pwd)\\]"${PS1}

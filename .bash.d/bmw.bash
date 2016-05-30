@@ -1,3 +1,6 @@
+[[ -n "$BMW" ]] ||
+    return
+
 alias update-cfg='Perl -I e:/home/ecl/perl/update-config e:/home/ecl/perl/update-config/update-config.pl'
 alias xml_validate='e:/qx29999/projs/misc-tools/xml_validate/validate.pl'
 
