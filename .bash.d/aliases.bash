@@ -95,7 +95,6 @@ If the option \"-n\" (as in \"now\") is used, use the current time instead."
 alias dc='darcs changes --summary LL'
 alias dr='darcs record'
 alias dww='darcs whatsnew --unified --look-for-adds'
-alias e='emacsclient -n'
 
 diff4ediff () {
     ## instead of showing the differences, this only prints the line
@@ -188,24 +187,6 @@ edit-executable () {
 }
 
 alias ver='echo Bash \($BASH\), version $BASH_VERSION $MACHTYPE'
-
-gg () { grep -r "$@" . ; }
-
-## `quick_find' is defined in "emacs.bash"
-if type -t quick_find > /dev/null 2>&1; then
-    alias ff=quick_find
-fi
-
-if type -t quick_grep > /dev/null 2>&1; then
-    alias gg=quick_grep
-fi
-
-if [[ ${INSIDE_EMACS} == *comint* ]] && type -t eshell_set_buffer_name > /dev/null 2>&1; then
-    ## "name buffer"
-    nb () {
-        eshell_set_buffer_name "${1:-${PWD##*/}}"
-    }
-fi
 
 alias tv='tar -tvf' # let `tar' automatically guess the compression format.
 alias tx='tar -xf' # dito.

@@ -1,3 +1,6 @@
+alias e='emacsclient -n'
+alias emacs-clean='emacs -Q -l ~/.emacs.d/init/init-essentials.el'
+
 quick_find () {
     if [[ $# -eq 0 ]]; then
         echo "Usage: $FUNCNAME [directory] <pattern>" >&2
@@ -20,6 +23,8 @@ quick_find () {
         find "$dir" "$@" -print0 | xargs -0 --no-run-if-empty ls -ldht
     fi
 }
+
+alias ff=quick_find
 
 quick_grep () {
     if [[ $# -eq 0 ]]; then
@@ -47,6 +52,8 @@ quick_grep () {
     fi
 }
 
+alias gg=quick_grep
+
 ## for use with Emacs' "pwdsync" library:
 ## https://groups.google.com/group/gnu.emacs.sources/msg/5a771f9f7c5983a1?dmode=source&output=gplain&noredirect
 emacs_sync_pwd () {
@@ -66,6 +73,11 @@ emacs_sync_pwd () {
 
 eshell_set_buffer_name () {
     _eshell_emacsclient --eval "(and (fboundp 'with-buffer-hosting-pid) (with-buffer-hosting-pid $$ (rename-buffer (format \"*shell: %s*\" \"$1\") t)))" > /dev/null
+}
+
+## "name buffer"
+nb () {
+    eshell_set_buffer_name "${1:-${PWD##*/}}"
 }
 
 eshell_read_history () {
