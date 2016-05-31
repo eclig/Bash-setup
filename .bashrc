@@ -45,29 +45,6 @@ inside_emacs () {
     test -n "$INSIDE_EMACS"
 }
 
-running_cygwin () {
-    [[ ${OSTYPE} == cygwin ]]
-}
-
-running_msys () {
-    [[ ${OSTYPE} == msys ]]
-}
-
-term_title () {
-    case "$TERM" in
-        *xterm* | rxvt | dtter | kterm | Eterm)
-            echo -en "\e]0;$*\a"
-        ;;
-        *screen*)
-            echo -en "\ek$*\e\\"
-        ;;
-    esac
-}
-
-cygpath2w32 () {
-    cygpath --windows "$1" | sed -e 's|\\|/|g';
-}
-
 agentize () {
     local SSH_AGENT_CONFIG="$HOME/.ssh_agent_session"
 
@@ -181,31 +158,6 @@ hash () {
 }
 
 #
-
-mk () {
-    test -f make.bat || return 42;
-    nice -n 20 ./make.bat "$@"
-}
-
-
-desktop () {
-        explorer "${USERPROFILE}\\Desktop\\$1"
-}
-
-cutfn () {
-
-    local contents;
-
-    test -z "$1" && set $PWD
-
-    for p in $*; do
-        contents=($contents $(cygpath --absolute --windows $p | sed -e 's/\\/\//g'))
-    done
-
-    echo -n $contents | putclip
-    return 0
-}
-
 ee () { . ~/.ee.sh $* ; }
 
 dump-shell-state () {
