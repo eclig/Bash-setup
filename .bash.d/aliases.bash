@@ -298,6 +298,8 @@ alias asdf='[ -f "$HOME/.Xmodmap.$(uname -n)" ] && xmodmap "$HOME/.Xmodmap.$(una
 
 alias escape='ssh -N -f escape'
 
+alias l=less
+
 alias svnu='svn update --ignore-externals'
 alias svns='svn status --ignore-externals'
 svn-delete-missing () { svn rm $( svn status "$@" | sed -e '/^!/!d' -e 's/^!//' ) ; }
