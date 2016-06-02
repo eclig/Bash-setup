@@ -90,7 +90,7 @@ cdd () {
     fi
 
     local -a dirs=()
-
+    local line
     for line in $(find "$start" -type d -iname "$dirname" 2>/dev/null | head -n 10 | sort); do
         dirs=(${dirs[@]} "$line")
     done
@@ -153,9 +153,12 @@ fi
 
 PS1='\! \w\$ '
 
-for f in $(find -L ~/.bash.d -name \*.bash -print 2> /dev/null); do
-    [[ -f "$f" ]] && . "$f"
-done
+if [[ -d ~/.bash.d ]]; then
+    for f in ~/.bash.d/*.bash; do
+        . "$f"
+    done
+    unset -v f
+fi
 
 if inside_emacs && type -t emacs_sync_pwd > /dev/null 2>&1; then
     PS1="\\[\$(emacs_sync_pwd)\\]"${PS1}

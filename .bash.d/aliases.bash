@@ -63,8 +63,8 @@ alias j='jobs -l'
 
 save () {
     local timeformat='%Y%m%dT%H%M%S'
-    local OPTARG OPTIND
     local time
+    local OPTARG OPTIND opt
     while getopts ":nh" opt; do
         case "$opt" in
             n)
@@ -87,6 +87,7 @@ If the option \"-n\" (as in \"now\") is used, use the current time instead."
 
     shift $((OPTIND - 1))
 
+    local f
     for f in "${@%/}"; do
         \cp --archive --interactive -- "${f}" "${f}.~${time:-$(date --reference="${f}" +'%Y%m%dT%H%M%S')}~"
     done
@@ -110,7 +111,7 @@ diff4ediff () {
 path () {
     local action='display';
 
-    local OPTARG OPTIND
+    local OPTARG OPTIND opt
     while getopts ":elh" opt; do
         case "$opt" in
             e)

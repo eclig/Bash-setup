@@ -85,7 +85,7 @@ eshell_read_history () {
 }
 
 esetenv () {
-    local evalstr;
+    local evalstr varvalue;
     for varvalue in "$@"; do
         local var=${varvalue%%=*}
         local value=${varvalue#*=}
