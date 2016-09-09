@@ -306,7 +306,8 @@ alias svns='svn status --ignore-externals'
 svn-delete-missing () { svn rm $( svn status "$@" | sed -e '/^!/!d' -e 's/^!//' ) ; }
 svnsx () { svn status "$@" | grep -v '^\( *X\|Perform\|$\)' ; }
 alias svnd='svn diff'
-alias svnl='svn log --use-merge-history --limit 10'
+## http://www.commandlinefu.com/commands/view/9474/one-line-log-format-for-svn
+svnl () { svn log --use-merge-history --limit 10 "$@" | perl -l40pe 's/^-+/\n/' ; }
 alias svn.news='svn log -v -rBASE:HEAD'
 alias svn.ext='svn pg svn:externals'
 function svn.url { svn info "$@" 2>/dev/null | awk -F': ' '$1 == "URL" {print $2}' ; }
