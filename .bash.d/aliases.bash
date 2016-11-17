@@ -312,7 +312,7 @@ alias svn.news='svn log -v -rBASE:HEAD'
 alias svn.ext='svn pg svn:externals'
 function svn.url { svn info "$@" 2>/dev/null | awk -F': ' '$1 == "URL" {print $2}' ; }
 
-alias gits='git status --short --branch'
+alias gits='git status --ignore-submodules --short --branch'
 alias gitl="git log --name-status --pretty=format:'%h %s (%an, %ar)' -n 10"
 
 alias ipaddr="curl -s http://checkip.dyndns.com/ | sed 's/[^0-9\.]//g'"
