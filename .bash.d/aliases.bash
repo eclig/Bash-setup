@@ -1,6 +1,6 @@
 ## -*- shell-script -*-
 
-alias aliases='source ~/.bash.d/aliases'
+alias aliases='source ~/.bash.d/aliases.bash'
 
 alias  1='cd -1'
 alias  2='cd -2'
