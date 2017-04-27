@@ -95,4 +95,4 @@ bind r resize
 bind { resize -4
 bind } resize +4
 
-screen -t TOP 9 htop
+screen -t TOP 9 sh -c 'exec htop --user $(id -nu)'
