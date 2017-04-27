@@ -94,3 +94,5 @@ bind W wrap
 bind r resize
 bind { resize -4
 bind } resize +4
+
+screen -t TOP 9 htop
