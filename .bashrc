@@ -52,8 +52,9 @@ agentize () {
         . "$SSH_AGENT_CONFIG" > /dev/null
     fi
 
+    ## `ssh-add' returns 2 if it can not connect to the authentication agent.
     if [[ -z "$SSH_AUTH_SOCK" ]] || \
-        ! ssh-add -l > /dev/null 2>&1; then
+        { ssh-add -l > /dev/null 2>&1; test $? -eq 2; }; then
         local SSH_AGENT_DATA="$(ssh-agent -s)"
         local UMASK_SAVE="$(umask -p)"
         umask 077
