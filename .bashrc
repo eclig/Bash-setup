@@ -34,6 +34,8 @@ add_to_path /usr/local/bin
 add_to_path ~/.bin/share
 add_to_path "~/.bin/$HOSTTYPE-$OSTYPE"
 
+add_to_path ~/.local/bin/share
+
 export EDITOR=emacsclient
 
 export ACK_OPTIONS='--nogroup --with-filename --smart-case'
