@@ -41,6 +41,10 @@ if [[ -n "$INSIDE_EMACS" ]]; then
     ACK_OPTIONS="--nofilter $ACK_OPTIONS"
 fi
 
+if [[ -n "$INSIDE_EMACS" && $TERM == "dumb" ]]; then
+    TERM=ansi             # let `ls' output color sequences
+fi
+
 inside_emacs () {
     test -n "$INSIDE_EMACS"
 }
