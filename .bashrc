@@ -43,10 +43,6 @@ if [[ -n "$INSIDE_EMACS" ]]; then
     ACK_OPTIONS="--nofilter $ACK_OPTIONS"
 fi
 
-if [[ -n "$INSIDE_EMACS" && $TERM == "dumb" ]]; then
-    TERM=ansi             # let `ls' output color sequences
-fi
-
 inside_emacs () {
     test -n "$INSIDE_EMACS"
 }
@@ -178,6 +174,12 @@ fi
 ## http://www.reddit.com/r/commandline/comments/12g76v/how_to_automatically_source_zshrc_in_all_open/
 ## kill -USR1 $(ps -s | awk '/\/bash$/ {print $1}') 2> /dev/null
 trap "source ~/.bash.d/bashrc" USR1
+
+## for some reason, if we change the terminal type too early, bashcomp
+## stops working.
+if [[ -n "$INSIDE_EMACS" && $TERM == "dumb" ]]; then
+    TERM=ansi             # let `ls' output color sequences
+fi
 
 ## Local Variables:
 ## page-delimiter: "^#+\f"
