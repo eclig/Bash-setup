@@ -61,6 +61,12 @@ lsnew () {
 
 alias j='jobs -l'
 
+# start a program and immediately disown it
+quiet() {
+    "$@" < /dev/null &> /dev/null & disown $!
+}
+
+
 save () {
     local timeformat='%Y%m%dT%H%M%S'
     local time
