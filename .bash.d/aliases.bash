@@ -341,4 +341,5 @@ xterm-here () {
     env --unset=EMACS --unset=INSIDE_EMACS PAGER=pager xterm
 }
 
-alias w7='VBoxManage startvm "Windows 7"'
+alias w10='VBoxManage startvm "Lopes VM"'
+alias w7=w10
