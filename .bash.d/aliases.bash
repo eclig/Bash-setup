@@ -318,6 +318,41 @@ alias svn.news='svn log -v -rBASE:HEAD'
 alias svn.ext='svn pg svn:externals'
 function svn.url { svn info "$@" 2>/dev/null | awk -F': ' '$1 == "URL" {print $2}' ; }
 
+alias aptl='apt list --installed'
+complete -F _complete_alias aptl
+
+alias apti='sudo apt install'
+complete -F _complete_alias apti
+
+alias aptrm='sudo apt purge'
+complete -F _complete_alias aptrm
+
+alias apt_search='apt-cache search'
+complete -F _complete_alias apt_search
+
+alias apt_file_search='apt-file search'
+complete -F _complete_alias apt_file_search
+
+service_status () {
+    service "$@" status;
+}
+complete -F _services service_status
+
+service_start () {
+    service "$@" start;
+}
+complete -F _services service_start
+
+service_stop () {
+    service "$@" stop;
+}
+complete -F _services service_stop
+
+service_restart () {
+    service "$@" restart;
+}
+complete -F _services service_restart
+
 alias gits='git status --short --branch --ignore-submodules=none'
 alias gitl="git log --name-status --pretty=format:'%h %s (%an, %ar)' -n 10"
 alias gitd='git difftool -d'
