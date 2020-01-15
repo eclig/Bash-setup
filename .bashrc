@@ -181,6 +181,10 @@ if [[ -n "$INSIDE_EMACS" && $TERM == "dumb" ]]; then
     TERM=ansi             # let `ls' output color sequences
 fi
 
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
+
 ## Local Variables:
 ## page-delimiter: "^#+\f"
 ## End:
