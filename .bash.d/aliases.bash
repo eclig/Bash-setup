@@ -35,6 +35,8 @@ alias uuuuu='cd ../../../../..'
 
 alias d='dirs -v'
 
+alias ep='emacspipe'
+
 alias cp='\cp -ivb'
 alias mv='\mv -ivb'
 alias mkdir='\mkdir -p'
