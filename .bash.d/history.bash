@@ -8,7 +8,7 @@ fi
 HISTSIZE=40960
 HISTFILESIZE=1000000
 HISTCONTROL="erasedups:ignoreboth"
-HISTIGNORE=" *:&:?:??:exit:ls:pwd:bg:fg:fc *:disown *:ee *:e *:history:help *:type *"
+HISTIGNORE=" *:&:?:??:exit:ls:pwd:bg:fg:fc *:disown *:ee *:e *:history:h *:hh *:help *:type *"
 HISTTIMEFORMAT='%FT%T '
 
 h () {
@@ -25,6 +25,10 @@ h () {
     else
         command history | awk -v IGNORECASE=1 -v w="$*" 'BEGIN{split(w,q)} {m=1; for (i in q) {if (match($0,q[i]) == 0) {m=0; break}}; if (m != 0) print $0}'
     fi
+}
+
+hh () {
+    grep -i -- "$@" "${HISTFILE}" | grep -v '^#' | sort | uniq -c | sort -nr | awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}'
 }
 
 history_compress () {
