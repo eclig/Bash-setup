@@ -8,7 +8,7 @@ fi
 HISTSIZE=40960
 HISTFILESIZE=1000000
 HISTCONTROL="erasedups:ignoreboth"
-HISTIGNORE=" *:&:?:??:exit:ls:bg:fg:fc *:ee *:e *:exit:history:help *:type *"
+HISTIGNORE=" *:&:?:??:exit:ls:pwd:bg:fg:fc *:disown *:ee *:e *:history:help *:type *"
 HISTTIMEFORMAT='%FT%T '
 
 h () {
@@ -19,11 +19,11 @@ h () {
     fi
 
     if [[ -z "$1" ]]; then
-        history 20
+        command history 20
     elif [[ $# -eq 1 && "$1" == +([[:digit:]]) ]]; then
-        history $1
+        command history $1
     else
-        history | awk -v w="$*" 'BEGIN{split(w,q)} {m=1; for (i in q) {if (match($0,q[i]) == 0) {m=0; break}}; if (m != 0) print $0}'
+        command history | awk -v IGNORECASE=1 -v w="$*" 'BEGIN{split(w,q)} {m=1; for (i in q) {if (match($0,q[i]) == 0) {m=0; break}}; if (m != 0) print $0}'
     fi
 }
 
