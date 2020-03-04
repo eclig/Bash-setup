@@ -43,6 +43,9 @@ if [[ -n "$INSIDE_EMACS" ]]; then
     ACK_OPTIONS="--nofilter $ACK_OPTIONS"
 fi
 
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_OPTS='--bind "ctrl-h:up"'
+
 inside_emacs () {
     test -n "$INSIDE_EMACS"
 }

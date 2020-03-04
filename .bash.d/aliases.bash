@@ -362,7 +362,7 @@ alias gitd='git difftool -d'
 alias ipaddr="curl -s http://checkip.dyndns.com/ | sed 's/[^0-9\.]//g'"
 alias ipsearch="dig +short"
 
-alias ag="ag --nogroup --column"
+alias ag="ag --nogroup"
 
 repobrowser () {
     ## http://tortoisesvn.net/docs/release/TortoiseSVN_en/tsvn-automation.html#tsvn-automation-basics
