@@ -5,8 +5,8 @@ if [[ -d ~/.bash.d ]]; then
     HISTFILE="$HOME/.bash.d/history"
 fi
 
-HISTSIZE=40960
-HISTFILESIZE=1000000
+HISTSIZE=-1                     # no limits!
+HISTFILESIZE=-1                 # no limits!
 HISTCONTROL="erasedups:ignoreboth"
 HISTIGNORE=" *:&:?:??:exit:ls:pwd:bg:fg:fc *:disown *:ee *:e *:history:h *:hh *:help *:type *"
 HISTTIMEFORMAT='%FT%T '
