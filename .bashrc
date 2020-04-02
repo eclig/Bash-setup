@@ -34,6 +34,7 @@ add_to_path /usr/local/bin
 add_to_path ~/.bin/share
 add_to_path ~/.bin/"$HOSTTYPE-$OSTYPE"
 
+add_to_path ~/.local/bin
 add_to_path ~/.local/bin/share
 
 export EDITOR=emacsclient
@@ -180,7 +181,7 @@ trap "source ~/.bash.d/bashrc" USR1
 
 ## for some reason, if we change the terminal type too early, bashcomp
 ## stops working.
-if [[ -n "$INSIDE_EMACS" && $TERM == "dumb" ]]; then
+if [[ -n "$INSIDE_EMACS" ]]; then
     TERM=ansi             # let `ls' output color sequences
 fi
 
